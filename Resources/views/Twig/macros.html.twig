@@ -1,0 +1,265 @@
+{# Base elements #}
+
+{% macro listButtons(buttons) %}{% spaceless %}
+    <ul class="wh-list-buttons">
+        {% for button in buttons %}
+
+            {% set button = button | merge({'class' : 'btn'}) %}
+            {% if button.class is defined %}
+                {% set button = button | merge({'class' : button.class}) %}
+            {% else %}
+                {% set button = button | merge({'class' : ''}) %}
+            {% endif %}
+            {% if button.size is defined %}
+                {% set button = button | merge({'class' : button.class ~ ' btn-' ~ button.size}) %}
+            {% endif %}
+            {% if button.color is defined %}
+                {% set button = button | merge({'class' : button.class ~ ' btn-' ~ button.color}) %}
+            {% else %}
+                {% set button = button | merge({'class' : button.class ~ ' btn-primary'}) %}
+            {% endif %}
+            {% if button.type is not defined %}
+                {% set button = button | merge({'type' : 'submit'}) %}
+            {% endif %}
+            {% if button.icon is defined %}
+                {% set label = '<i class="fa fa-' ~ button.icon ~ '"></i>' %}
+                {% if button.label is defined %}
+                    {% set label = label ~ ' ' ~ button.label %}
+                {% endif %}
+                {% set button = button | merge({'label' : label}) %}
+            {% endif %}
+
+            <li>
+                {% if button.buttonType == 'link' %}
+
+                    <a href="{{ button.href }}" class="{{ button.class }}"
+                       {% if button.modal is defined %}data-modal="modalAjax"{% endif %} {% if button.confirm is defined %}onclick="return confirm('{{ button.confirm }}')"{% endif %} >{{ button.label | raw }}</a>
+
+                {% elseif button.buttonType == 'button' %}
+
+                    <button type="{{ button.type }}" class="{{ button.class }}">{{ button.label | raw }}</button>
+
+                {% endif %}
+            </li>
+
+        {% endfor %}
+    </ul>
+{% endspaceless %}{% endmacro %}
+
+{% macro listFormButtons(buttons, form) %}{% spaceless %}
+    <ul class="wh-list-buttons">
+        {% for button in buttons %}
+
+            {% set button = button | merge({'class' : 'btn'}) %}
+            {% if button.class is defined %}
+                {% set button = button | merge({'class' : button.class}) %}
+            {% else %}
+                {% set button = button | merge({'class' : ''}) %}
+            {% endif %}
+            {% if button.size is defined %}
+                {% set button = button | merge({'class' : button.class ~ ' btn-' ~ button.size}) %}
+            {% endif %}
+            {% if button.color is defined %}
+                {% set button = button | merge({'class' : button.class ~ ' btn-' ~ button.color}) %}
+            {% else %}
+                {% set button = button | merge({'class' : button.class ~ ' btn-primary'}) %}
+            {% endif %}
+            {% if button.icon is defined %}
+                {% set label = '<i class="fa fa-' ~ button.icon ~ '"></i>' %}
+                {% if button.label is defined %}
+                    {% set label = label ~ ' ' ~ button.label %}
+                {% endif %}
+                {% set button = button | merge({'label' : label}) %}
+            {% endif %}
+
+            <li>
+                {{ form_widget(attribute(form, button.field), {'label' : button.label, 'attr' : {'class' : button.class, 'data-submit-name' : button.field}}) }}
+            </li>
+
+        {% endfor %}
+    </ul>
+{% endspaceless %}{% endmacro %}
+
+{% macro formFields(form, formFields) %}{% spaceless %}
+
+    {% set col = 0 %}
+
+    {% for formField, properties  in formFields %}
+
+        {% set col = col + properties.col %}
+
+        {% if loop.first or col > 12 %}
+
+            {% if not loop.first %}
+                </div>
+                {% set col = properties.col %}
+            {% endif %}
+
+            <div class="row">
+
+        {% endif %}
+
+        <div class="{{ 'col-md-' ~ properties.col }}">
+            {{ form_row(attribute(form, formField)) }}
+        </div>
+
+        {% if loop.last %}
+            </div>
+        {% endif %}
+
+    {% endfor %}
+
+{% endspaceless %}{% endmacro %}
+
+{% macro formZone(form, formZone) %}{% spaceless %}
+
+    {% if formZone.title is defined %}
+        <legend>{{ formZone.title }}</legend>
+    {% endif %}
+
+    {% if formZone.fields is defined %}
+        {{ _self.formFields(form, formZone.fields) }}
+    {% endif %}
+
+{% endspaceless %}{% endmacro %}
+
+{% macro panel(properties) %}{% spaceless %}
+
+    {% if properties.color is not defined %}
+        {% set properties = properties | merge({'color' : 'default'}) %}
+    {% endif %}
+
+    <div class="wh-panel panel {{ 'panel-' ~ properties.color }}">
+
+        <div class="panel-heading">
+
+            <table>
+                <tr>
+                    <td>
+                        <span>{% if properties.icon is defined %}<i
+                                class="{{ 'fa fa-' ~ properties.icon }}"></i> {% endif %}{{ properties.headerLabel }}</span>
+                    </td>
+                    {% if properties.headerListButtons is defined %}
+                        <td class="right">
+                            {{ _self.listButtons(properties.headerListButtons) }}
+                        </td>
+                    {% endif %}
+                </tr>
+            </table>
+        </div>
+
+        <div class="panel-body">
+            {% if properties.formFields is defined %}
+                {{ _self.formFields(properties.form, properties.formFields) }}
+            {% endif %}
+            {% if properties.tableFields is defined %}
+                {{ _self.table(properties.tableFields, properties.entities) }}
+            {% endif %}
+        </div>
+
+        {% if properties.footerListButtons is defined %}
+            <div class="panel-footer">
+                {{ _self.listButtons(properties.footerListButtons) }}
+            </div>
+        {% endif %}
+
+        {% if properties.footerListFormButtons is defined %}
+            <div class="panel-footer">
+                {{ _self.listFormButtons(properties.footerListFormButtons, properties.form) }}
+            </div>
+        {% endif %}
+
+    </div>
+
+{% endspaceless %}{% endmacro %}
+
+{% macro getValueOfEntity(entity, wantedValueSlug) %}{% spaceless %}
+
+    {% set fields = wantedValueSlug | split('.') %}
+    {% set value = '' %}
+
+    {% for field in fields %}
+
+        {% if loop.first %}
+            {% set value = attribute(entity, field) %}
+        {% elseif currentValue %}
+            {% set value = attribute(value, field) %}
+        {% endif %}
+
+    {% endfor %}
+
+    {{ value }}
+
+{% endspaceless %}{% endmacro %}
+
+{% macro table(fields, entities) %}{% spaceless %}
+
+    <table class="wh-table table table-striped">
+
+        <thead>
+        <tr>
+            {% for name in fields %}
+                <th>{% if name is not iterable %}{{ name }}{% endif %}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+
+        {% for entity in entities %}
+
+            {% set trClass = '' %}
+
+            {% if attribute(entity, 'status') is defined %}
+                {% if attribute(entity, 'status') == 0 %}
+                    {% set trClass = 'danger' %}
+                {% else %}
+                    {% set trClass = 'success' %}
+                {% endif %}
+            {% endif %}
+
+            <tr class="{{ trClass }}">
+                {% for property, value in fields %}
+
+                    {% if value is iterable %}
+
+                        {% set entityButtons = [] %}
+
+                        {% for entityButton in value %}
+
+                            {% set entityButton = entityButton | merge({'buttonType' : 'link'}) %}
+                            {% set entityButton = entityButton | merge({'size' : 'xs'}) %}
+
+                            {% if entityButton.routeParams is defined %}
+
+                                {% set entityRouteParams = [] %}
+
+                                {% for routeParamName, routeParam in entityButton.routeParams %}
+
+                                    {% set entityRouteParam = _self.getValueOfEntity(entity, routeParam) %}
+
+                                    {% set entityRouteParams = entityRouteParams | merge({(routeParamName) : entityRouteParam}) %}
+
+                                {% endfor %}
+
+                                {% set entityButton = entityButton | merge({'href' : path(entityButton.route, entityRouteParams)}) %}
+
+                            {% endif %}
+
+                            {% set entityButtons = entityButtons | merge([entityButton]) %}
+
+                        {% endfor %}
+
+                        <td>{{ _self.listButtons(entityButtons) }}</td>
+
+                    {% else %}
+
+                        <td>{{ _self.getValueOfEntity(entity, property) }}</td>
+
+                    {% endif %}
+
+                {% endfor %}
+            </tr>
+        {% endfor %}
+
+    </table>
+
+{% endspaceless %}{% endmacro %}

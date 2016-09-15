@@ -1,0 +1,87 @@
+{% extends '@WHBackendTemplate/BackendTemplate/Layout/layout.html.twig' %}
+
+{% block title %}<h1>{{ title }}</h1>{% endblock %}
+
+{% block breadcrumb %}
+    {% include '@WHBackendTemplate/BackendTemplate/Element/breadcrumb.html.twig' with {'breadcrumb': breadcrumb} %}
+{% endblock %}
+
+{% block body %}
+
+    {% if formPanelProperties.form is defined %}
+
+        {% form_theme formPanelProperties.form 'bootstrap_3_layout.html.twig' %}
+
+        {{ form_start(formPanelProperties.form) }}
+        {{ macros.panel(formPanelProperties) }}
+        {{ form_end(formPanelProperties.form) }}
+
+    {% endif %}
+
+    {% if tree is defined %}
+
+        <div class="row">
+
+            <div class="col-md-6">
+
+                <div class="wh-tree">
+                    {% set menuTemplate = '@WHBackendTemplate/Twig/tree.html.twig' %}
+                    {% set menuOptions = {'entityPathConfig' : entityPathConfig, 'urlData' : urlData} %}
+                    {% set menu = knp_menu_get('WHSuperAdminBundle:Tree:tree', [], menuOptions) %}
+                    {{ knp_menu_render(menu, {allow_safe_labels : true, template: menuTemplate}) | raw }}
+                </div>
+
+            </div>
+
+            <div class="col-md-6">
+                {{ macros.panel(tablePanelProperties) }}
+            </div>
+
+        </div>
+
+    {% else %}
+
+        {{ macros.panel(tablePanelProperties) }}
+        {% include 'WHLibBundle:Element:pagination.html.twig' with {'pagination' : pagination} %}
+
+    {% endif %}
+
+{% endblock %}
+
+{% block javascript %}
+
+    {% if tree is defined %}
+
+        <script type="text/javascript">
+
+            $('.wh-tree ul').each(function () {
+
+                var list = $(this);
+
+                list.sortable({
+                    placeholder: 'highlight',
+                    axis: 'y',
+                    stop: function () {
+
+                        $.ajax({
+                            type: 'POST',
+                            url: '{{ orderUrl }}',
+                            data: list.sortable('serialize', {attribute: 'data-id', key: 'ids[]', expression: /(.+)/}),
+                            cache: false,
+                            complete: function (data) {
+
+                                var data = window.JSON.parse(data.responseText)
+                                handleJsonResponse(data);
+                            }
+                        });
+                    }
+                });
+
+                $(this).disableSelection();
+            });
+
+        </script>
+
+    {% endif %}
+
+{% endblock %}

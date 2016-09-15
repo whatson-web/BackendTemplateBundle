@@ -1,0 +1,61 @@
+{% extends '@WHBackendTemplate/BackendTemplate/Layout/layout.html.twig' %}
+
+{% block title %}<h1>{{ title }}</h1>{% endblock %}
+
+{% block breadcrumb %}
+    {% include '@WHBackendTemplate/BackendTemplate/Element/breadcrumb.html.twig' with {'breadcrumb': breadcrumb} %}
+{% endblock %}
+
+{% block body %}
+
+    {% form_theme form 'bootstrap_3_layout.html.twig' %}
+
+    {{ form_start(form) }}
+
+    <div class="row">
+
+        <div class="col-md-8">
+
+            <ul class="nav nav-tabs" role="tablist">
+
+                {% for key, tab in central.tabs %}
+                    <li role="presentation" {% if loop.first %}class="active"{% endif %}>
+                        <a href="{{ '#' ~ key }}" aria-controls="home" role="tab" data-toggle="tab">
+                            {% if tab.icon %}<i class="{{ 'fa fa-' ~ tab.icon }}"></i> {% endif %}{{ tab.name }}
+                        </a>
+                    </li>
+                {% endfor %}
+
+            </ul>
+
+            <div class="tab-content">
+
+                {% for key, tab in central.tabs %}
+
+                    <div role="tabpanel" class="tab-pane {% if loop.first %}active{% endif %}" id="{{ key }}">
+
+                        {% for formZone in tab.formZones %}
+                            {{ macros.formZone(form, formZone) }}
+                        {% endfor %}
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            {% for key, panelZone in column.panelZones %}
+                {{ macros.panel(panelZone) }}
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+    {{ form_end(form) }}
+
+{% endblock %}
