@@ -1,0 +1,16 @@
+{
+  "name": "whatson-web/backend-template-bundle",
+  "type": "symfony-bundle",
+  "description": "Symfony - Whatson Web - BackendTemplateBundle",
+  "homepage": "https://github.com/whatson-web/BackendTemplateBundle",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Jean-François Thuillier",
+      "email": "jf@whatson-web.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.3.9"
+  }
+}
