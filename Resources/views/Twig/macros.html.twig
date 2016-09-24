@@ -32,7 +32,7 @@
             <li>
                 {% if button.buttonType == 'link' %}
 
-                    <a href="{{ button.href }}" class="{{ button.class }}"
+                    <a {% if button.href is defined %}href="{{ button.href }}"{% endif %} class="{{ button.class }}"
                        {% if button.modal is defined %}data-modal="modalAjax"{% endif %} {% if button.confirm is defined %}onclick="return confirm('{{ button.confirm }}')"{% endif %} >{{ button.label | raw }}</a>
 
                 {% elseif button.buttonType == 'button' %}
@@ -85,6 +85,10 @@
     {% set col = 0 %}
 
     {% for formField, properties  in formFields %}
+
+        {% if properties.col is not defined %}
+            {% set properties = properties | merge({'col' : 12}) %}
+        {% endif %}
 
         {% set col = col + properties.col %}
 
@@ -182,7 +186,7 @@
 
         {% if loop.first %}
             {% set value = attribute(entity, field) %}
-        {% elseif currentValue %}
+        {% else %}
             {% set value = attribute(value, field) %}
         {% endif %}
 
@@ -228,13 +232,26 @@
                             {% set entityButton = entityButton | merge({'buttonType' : 'link'}) %}
                             {% set entityButton = entityButton | merge({'size' : 'xs'}) %}
 
-                            {% if entityButton.routeParams is defined %}
+                            {% if entityButton.parameters is defined %}
 
                                 {% set entityRouteParams = [] %}
 
-                                {% for routeParamName, routeParam in entityButton.routeParams %}
+                                {% for routeParamName, routeParam in entityButton.parameters %}
 
-                                    {% set entityRouteParam = _self.getValueOfEntity(entity, routeParam) %}
+                                    {% set routeParamFields = routeParam | split('.') %}
+                                    {% set routeParamValue = '' %}
+
+                                    {% for routeParamField in routeParamFields %}
+
+                                        {% if loop.first %}
+                                            {% set routeParamValue = attribute(entity, routeParamField) %}
+                                        {% else %}
+                                            {% set routeParamValue = attribute(routeParamValue, routeParamField) %}
+                                        {% endif %}
+
+                                    {% endfor %}
+
+                                    {% set entityRouteParam = routeParamValue %}
 
                                     {% set entityRouteParams = entityRouteParams | merge({(routeParamName) : entityRouteParam}) %}
 
