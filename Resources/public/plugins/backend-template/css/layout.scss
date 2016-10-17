@@ -19,6 +19,10 @@ ul.wh-list-buttons {
 
   }
 
+  &.left {
+    text-align: left;
+  }
+
 }
 
 .wh-panel {
@@ -62,6 +66,22 @@ ul.wh-list-buttons {
 
     ul {
       padding-left: 20px;
+    }
+
+  }
+
+}
+
+
+.wh-tree-folder {
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    ul {
+      padding-left: 15px;
     }
 
   }
