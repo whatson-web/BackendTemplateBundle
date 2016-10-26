@@ -1,0 +1,42 @@
+{% extends 'bootstrap_3_layout.html.twig' %}
+
+{% block amazon_s3_file_row %}
+
+    <div class="amazon-finderzone" id="{{ id ~ '_finder_zone' }}">
+
+        {% if value is not empty %}
+            <div class="fileinfos" id="{{ id ~ '_finder_fileinfos' }}">
+                {{ render(controller('WHAmazonS3MediaBundle:Backend/File:preview', {'id' : value})) }}
+            </div>
+        {% endif %}
+
+        <input type="hidden" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+
+        <ul class="wh-list-buttons center">
+            <li>
+                <a href="#" class="btn btn-primary btn-xs" id="{{ id ~ '_finder_edit' }}">
+                    <i class="fa fa-edit"></i>
+                </a>
+            </li>
+            <li {% if value is empty %}style="display: none;"{% endif %}>
+                <a href="#" class="btn btn-danger btn-xs" id="{{ id ~ '_finder_delete' }}">
+                    <i class="fa fa-trash"></i>
+                </a>
+            </li>
+        </ul>
+
+    </div>
+
+    <script type="text/javascript">
+        document.getElementById('{{ id ~ '_finder_edit' }}').onclick = function () {
+            window.open("{{ path('bk_wh_amazons3media_file_index') ~ '?inputId' ~ id }}", "popupWindow", "height=500, width=1170");
+            return false;
+        };
+        document.getElementById('{{ id ~ '_finder_delete' }}').onclick = function () {
+            document.getElementById('{{ id ~ '_finder_fileinfos' }}').innerHTML = '';
+            document.getElementById('{{ id }}').value = '';
+            return false;
+        };
+    </script>
+
+{% endblock %}

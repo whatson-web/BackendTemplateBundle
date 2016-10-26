@@ -23,6 +23,10 @@ ul.wh-list-buttons {
     text-align: left;
   }
 
+  &.center {
+    text-align: center;
+  }
+
 }
 
 .wh-panel {
@@ -72,7 +76,6 @@ ul.wh-list-buttons {
 
 }
 
-
 .wh-tree-folder {
 
   ul {
@@ -84,6 +87,14 @@ ul.wh-list-buttons {
       padding-left: 15px;
     }
 
+  }
+
+}
+
+.amazon-finderzone {
+
+  .fileinfos {
+    margin: 0 0 10px 0;
   }
 
 }

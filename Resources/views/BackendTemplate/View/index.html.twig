@@ -10,7 +10,7 @@
 
     {% if formPanelProperties.form is defined %}
 
-        {% form_theme formPanelProperties.form 'bootstrap_3_layout.html.twig' %}
+        {% form_theme formPanelProperties.form '@WHBackendTemplate/Twig/bootstrap_3_layout.html.twig' %}
 
         {{ form_start(formPanelProperties.form) }}
         {{ macros.panel(formPanelProperties) }}
