@@ -1,6 +1,6 @@
 <?php
 
-namespace WH\BackendTemplateBundle\Controller\FrontEnd;
+namespace WH\BackendTemplateBundle\Controller\Frontend;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
