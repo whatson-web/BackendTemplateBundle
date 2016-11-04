@@ -104,7 +104,21 @@
         {% endif %}
 
         <div class="{{ 'col-md-' ~ properties.col }}">
-            {{ form_row(attribute(form, formField)) }}
+
+            {% set formFieldFields = formField | split('.') %}
+            {% set formFieldValue = '' %}
+
+            {% for formFieldField in formFieldFields %}
+
+                {% if loop.first %}
+                    {% set formFieldValue = attribute(form, formFieldField) %}
+                {% else %}
+                    {% set formFieldValue = attribute(formFieldValue, formFieldField) %}
+                {% endif %}
+
+            {% endfor %}
+
+            {{ form_row(formFieldValue) }}
         </div>
 
         {% if loop.last %}
