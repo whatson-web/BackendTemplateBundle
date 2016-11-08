@@ -217,7 +217,7 @@
         <thead>
         <tr>
             {% for name in fields %}
-                <th>{% if name is not iterable %}{{ name }}{% endif %}</th>
+                <th>{% if name.label is defined %}{{ name.label }}{% endif %}</th>
             {% endfor %}
         </tr>
         </thead>
@@ -237,45 +237,49 @@
             <tr class="{{ trClass }}">
                 {% for property, value in fields %}
 
-                    {% if value is iterable %}
+                    {% if value.multipleFields is defined %}
 
                         {% set entityButtons = [] %}
 
-                        {% for entityButton in value %}
+                        {% for key, entityButton in value %}
 
-                            {% set entityButton = entityButton | merge({'buttonType' : 'link'}) %}
-                            {% set entityButton = entityButton | merge({'size' : 'xs'}) %}
+                            {% if key != 'multipleFields' %}
 
-                            {% if entityButton.parameters is defined %}
+                                {% set entityButton = entityButton | merge({'buttonType' : 'link'}) %}
+                                {% set entityButton = entityButton | merge({'size' : 'xs'}) %}
 
-                                {% set entityRouteParams = [] %}
+                                {% if entityButton.parameters is defined %}
 
-                                {% for routeParamName, routeParam in entityButton.parameters %}
+                                    {% set entityRouteParams = [] %}
 
-                                    {% set routeParamFields = routeParam | split('.') %}
-                                    {% set routeParamValue = '' %}
+                                    {% for routeParamName, routeParam in entityButton.parameters %}
 
-                                    {% for routeParamField in routeParamFields %}
+                                        {% set routeParamFields = routeParam | split('.') %}
+                                        {% set routeParamValue = '' %}
 
-                                        {% if loop.first %}
-                                            {% set routeParamValue = attribute(entity, routeParamField) %}
-                                        {% else %}
-                                            {% set routeParamValue = attribute(routeParamValue, routeParamField) %}
-                                        {% endif %}
+                                        {% for routeParamField in routeParamFields %}
+
+                                            {% if loop.first %}
+                                                {% set routeParamValue = attribute(entity, routeParamField) %}
+                                            {% else %}
+                                                {% set routeParamValue = attribute(routeParamValue, routeParamField) %}
+                                            {% endif %}
+
+                                        {% endfor %}
+
+                                        {% set entityRouteParam = routeParamValue %}
+
+                                        {% set entityRouteParams = entityRouteParams | merge({(routeParamName) : entityRouteParam}) %}
 
                                     {% endfor %}
 
-                                    {% set entityRouteParam = routeParamValue %}
+                                    {% set entityButton = entityButton | merge({'href' : path(entityButton.route, entityRouteParams)}) %}
 
-                                    {% set entityRouteParams = entityRouteParams | merge({(routeParamName) : entityRouteParam}) %}
+                                {% endif %}
 
-                                {% endfor %}
-
-                                {% set entityButton = entityButton | merge({'href' : path(entityButton.route, entityRouteParams)}) %}
+                                {% set entityButtons = entityButtons | merge([entityButton]) %}
 
                             {% endif %}
-
-                            {% set entityButtons = entityButtons | merge([entityButton]) %}
 
                         {% endfor %}
 
@@ -283,7 +287,25 @@
 
                     {% else %}
 
-                        <td>{{ _self.getValueOfEntity(entity, property) }}</td>
+                        {% if value.type is defined and value.type == 'link' %}
+                            {% set entityValue = _self.getValueOfEntity(entity, property) %}
+                            {% if not (entityValue matches '#http://.*#') %}
+                                {% set entityValue = path('ft_wh_seo_router_dispatch', {'url' : entityValue}) %}
+                            {% endif %}
+                            <td>
+                                <a href="{{ entityValue }}" target="_blank">
+                                    {{ _self.getValueOfEntity(entity, property) }}
+                                </a>
+                            </td>
+                        {% else %}
+
+                            {% if value.type is defined and value.type == 'boolean' %}
+                                <td>{% if _self.getValueOfEntity(entity, property) %}Oui{% else %}Non{% endif %}</td>
+                            {% else %}
+                                <td>{{ _self.getValueOfEntity(entity, property) }}</td>
+                            {% endif %}
+
+                        {% endif %}
 
                     {% endif %}
 
