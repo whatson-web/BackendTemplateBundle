@@ -1,43 +1,19 @@
 {% extends 'bootstrap_3_layout.html.twig' %}
 
-{% block amazon_s3_file_row %}
+{% block elfinder_widget %}
+    {% set attr = attr|merge({class: (attr.class|default('') ~ ' form-control')|trim}) %}
+    <input type="text" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} data-type="elfinder-input-field" />
+    {% if enable and instance is defined %}
+        <script type="text/javascript" charset="utf-8">
+            document.addEventListener("DOMContentLoaded", function(event) {
+                $('[data-type="elfinder-input-field"][id="{{ id }}"]').on("click",function() {
+                    var childWin = window.open("{{path('elfinder', {'instance': instance, 'homeFolder': homeFolder })}}?id={{ id }}", "popupWindow", "height=450, width=900");
+                });
+            });
 
-    <div class="amazon-finderzone" id="{{ id ~ '_finder_zone' }}">
-
-        <div class="fileinfos" id="{{ id ~ '_finder_fileinfos' }}">
-            {% if value is not empty %}
-                {{ render(controller('WHAmazonS3MediaBundle:Backend/File:preview', {'id' : value})) }}
-            {% endif %}
-        </div>
-
-        <input type="hidden" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
-
-        <ul class="wh-list-buttons center">
-            <li>
-                <a href="#" class="btn btn-primary btn-xs" id="{{ id ~ '_finder_edit' }}">
-                    <i class="fa fa-edit"></i>
-                </a>
-            </li>
-            <li>
-                <a href="#" class="btn btn-danger btn-xs" id="{{ id ~ '_finder_delete' }}"
-                   {% if value is empty %}style="display: none;"{% endif %}>
-                    <i class="fa fa-trash"></i>
-                </a>
-            </li>
-        </ul>
-
-    </div>
-
-    <script type="text/javascript">
-        document.getElementById('{{ id ~ '_finder_edit' }}').onclick = function () {
-            window.open("{{ path('bk_wh_amazons3media_file_index') ~ '?inputId=' ~ id }}", "popupWindow", "height=500, width=1170");
-            return false;
-        };
-        document.getElementById('{{ id ~ '_finder_delete' }}').onclick = function () {
-            document.getElementById('{{ id ~ '_finder_fileinfos' }}').innerHTML = '';
-            document.getElementById('{{ id }}').value = '';
-            return false;
-        };
-    </script>
-
+            function setValue(value, element_id) {
+                $('[data-type="elfinder-input-field"]' + (element_id ? '[id="'+ element_id +'"]': '')).val(value).change();
+            }
+        </script>
+    {% endif %}
 {% endblock %}

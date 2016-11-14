@@ -26,6 +26,17 @@
                     </li>
                 {% endfor %}
 
+                {% if central.viewLink is defined %}
+                    <li role="presentation" style="float:right;">
+                        <a href="{{ central.viewLink.url }}" target="_blank">
+                            {% if central.viewLink.icon %}
+                                <i class="{{ 'fa fa-' ~ central.viewLink.icon }}"></i>
+                            {% endif %}
+                            {{ central.viewLink.name }}
+                        </a>
+                    </li>
+                {% endif %}
+
             </ul>
 
             <div class="tab-content">
