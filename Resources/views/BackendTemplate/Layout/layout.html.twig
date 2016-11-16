@@ -71,7 +71,7 @@
 
                 {% if globalConfig.menus.right is defined %}
 
-                    {% set menuOptions = {'menuSlug' : globalConfig.menus.right} %}
+                    {% set menuOptions = {'menuSlug' : globalConfig.menus.right, 'menuRight': true} %}
                     {% set menu = knp_menu_get('WHSuperAdminBundle:Tree:menu', [], menuOptions) %}
                     {{ knp_menu_render(menu, {allow_safe_labels : true, template: menuTemplate}) | raw }}
 
