@@ -1,3 +1,11 @@
+h1 {
+  margin: 0 0 20px 0;
+}
+
+.tab-content > .tab-pane {
+  padding: 20px 0 0 0;
+}
+
 ul.wh-list-buttons {
   margin: 0;
   padding: 0;
@@ -27,6 +35,10 @@ ul.wh-list-buttons {
     text-align: center;
   }
 
+}
+
+.wh-table {
+  margin: 0;
 }
 
 .wh-panel {
@@ -72,29 +84,6 @@ ul.wh-list-buttons {
       padding-left: 20px;
     }
 
-  }
-
-}
-
-.wh-tree-folder {
-
-  ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-
-    ul {
-      padding-left: 15px;
-    }
-
-  }
-
-}
-
-.amazon-finderzone {
-
-  .fileinfos {
-    margin: 0 0 10px 0;
   }
 
 }

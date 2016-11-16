@@ -61,6 +61,10 @@ var initCountChars = function () {
     });
 };
 
+var initSelect2 = function () {
+    $('select').select2();
+};
+
 var setCountChars = function(element) {
     var nbChars = element.val().length;
     element.parent().children('.wh-count-chars-display').html(nbChars + ' caractères');
@@ -71,10 +75,12 @@ var functionToReloadOnAjaxRequest = function () {
     whModal();
     whHandleModalAjaxForm();
     initCountChars();
+    initSelect2();
 };
 
 $(window).ready(function () {
     whListButtonsWriteTdWidth();
     whModal();
     initCountChars();
+    initSelect2();
 });

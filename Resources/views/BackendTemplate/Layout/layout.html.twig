@@ -22,6 +22,7 @@
     {% endstylesheets %}
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css"/>
 
     {% stylesheets
     '@WHBackendTemplateBundle/Resources/public/plugins/backend-template/css/layout.scss'
@@ -97,7 +98,13 @@
 </div>
 
 {% javascripts
-'@WHBackendTemplateBundle/Resources/public/plugins/jquery/js/jquery.min.js'
+'@WHBackendTemplateBundle/Resources/public/plugins/jquery/js/jquery.min.js' %}
+<script src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.full.min.js"></script>
+
+{% javascripts
 '@WHBackendTemplateBundle/Resources/public/plugins/jquery-ui/js/jquery-ui.min.js'
 '@WHBackendTemplateBundle/Resources/public/plugins/bootstrap/js/bootstrap.min.js'
 '@WHBackendTemplateBundle/Resources/public/plugins/backend-template/js/layout.js' %}
