@@ -43,7 +43,12 @@ var whHandleModalAjaxForm = function () {
 
 var handleJsonResponse = function (data) {
     if (data.success) {
-        window.location.href = data.redirect;
+        if (data.redirect) {
+            window.location.href = data.redirect;
+        }
+        if (data.reload) {
+            window.location.reload();
+        }
     }
 };
 
@@ -62,10 +67,12 @@ var initCountChars = function () {
 };
 
 var initSelect2 = function () {
-    $('select').select2();
+    $('select').select2({
+        'width': '100%',
+    });
 };
 
-var setCountChars = function(element) {
+var setCountChars = function (element) {
     var nbChars = element.val().length;
     element.parent().children('.wh-count-chars-display').html(nbChars + ' caractères');
 };
