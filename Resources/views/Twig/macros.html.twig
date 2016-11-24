@@ -203,7 +203,13 @@
                 {{ _self.formFields(properties.form, properties.formFields) }}
             {% endif %}
             {% if properties.tableFields is defined %}
-                {{ _self.table(properties.tableFields, properties.entities) }}
+                {% if properties.sortable is defined %}
+                    <div class="wh-sortable">
+                        {{ _self.table(properties.tableFields, properties.entities, {'sortable': true}) }}
+                    </div>
+                {% else %}
+                    {{ _self.table(properties.tableFields, properties.entities, {}) }}
+                {% endif %}
             {% endif %}
         </div>
 
@@ -242,7 +248,7 @@
 
 {% endspaceless %}{% endmacro %}
 
-{% macro table(fields, entities) %}{% spaceless %}
+{% macro table(fields, entities, properties) %}{% spaceless %}
 
     <table class="wh-table table table-striped">
 
@@ -266,7 +272,7 @@
                 {% endif %}
             {% endif %}
 
-            <tr class="{{ trClass }}">
+            <tr class="{{ trClass }}" {% if properties.sortable is defined %}data-id="{{ entity.id }}"{% endif %}>
                 {% for property, value in fields %}
 
                     {% if value.multipleFields is defined %}

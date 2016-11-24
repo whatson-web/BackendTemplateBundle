@@ -62,14 +62,42 @@
                     placeholder: 'highlight',
                     axis: 'y',
                     stop: function () {
-
                         $.ajax({
                             type: 'POST',
                             url: '{{ orderUrl }}',
                             data: list.sortable('serialize', {attribute: 'data-id', key: 'ids[]', expression: /(.+)/}),
                             cache: false,
                             complete: function (data) {
+                                var data = window.JSON.parse(data.responseText)
+                                handleJsonResponse(data);
+                            }
+                        });
+                    }
+                });
 
+                $(this).disableSelection();
+            });
+
+        </script>
+
+    {% elseif orderUrl is defined %}
+
+        <script type="text/javascript">
+
+            $('.wh-sortable tbody').each(function () {
+
+                var list = $(this);
+
+                list.sortable({
+                    placeholder: 'highlight',
+                    axis: 'y',
+                    stop: function () {
+                        $.ajax({
+                            type: 'POST',
+                            url: '{{ orderUrl }}',
+                            data: list.sortable('serialize', {attribute: 'data-id', key: 'ids[]', expression: /(.+)/}),
+                            cache: false,
+                            complete: function (data) {
                                 var data = window.JSON.parse(data.responseText)
                                 handleJsonResponse(data);
                             }
