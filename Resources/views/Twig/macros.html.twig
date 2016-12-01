@@ -179,9 +179,9 @@
         {% set properties = properties | merge({'color' : 'default'}) %}
     {% endif %}
 
-    <div class="wh-panel panel {{ 'panel-' ~ properties.color }}">
+    <div class="ibox  {{ 'panel-' ~ properties.color }}">
 
-        <div class="panel-heading">
+        <div class="ibox-title ">
 
             <table>
                 <tr>
@@ -196,9 +196,10 @@
                     {% endif %}
                 </tr>
             </table>
+
         </div>
 
-        <div class="panel-body">
+        <div class="ibox-content">
             {% if properties.formFields is defined %}
                 {{ _self.formFields(properties.form, properties.formFields) }}
             {% endif %}
@@ -211,19 +212,20 @@
                     {{ _self.table(properties.tableFields, properties.entities, {}) }}
                 {% endif %}
             {% endif %}
+
+            {% if properties.footerListButtons is defined %}
+                <div>
+                    {{ _self.listButtons(properties.footerListButtons) }}
+                </div>
+            {% endif %}
+
+            {% if properties.footerListFormButtons is defined %}
+                <div>
+                    {{ _self.listFormButtons(properties.footerListFormButtons, properties.form) }}
+                </div>
+            {% endif %}
+
         </div>
-
-        {% if properties.footerListButtons is defined %}
-            <div class="panel-footer">
-                {{ _self.listButtons(properties.footerListButtons) }}
-            </div>
-        {% endif %}
-
-        {% if properties.footerListFormButtons is defined %}
-            <div class="panel-footer">
-                {{ _self.listFormButtons(properties.footerListFormButtons, properties.form) }}
-            </div>
-        {% endif %}
 
     </div>
 

@@ -4,7 +4,7 @@
 header {
 
   .navbar-default {
-    border-color: #162227;
+    border-color: transparent;
     @include border-radius(0);
     background-color: rgb(46,66,76); // Old browsers
     @include filter-gradient(#283c46, #354d56, vertical); // IE6-9
@@ -18,6 +18,7 @@ header {
         .navbar-nav {
 
           li {
+            border-bottom: 4px solid transparent;
 
             a {
               color: #9ca1a5;
@@ -25,6 +26,7 @@ header {
 
             &:hover  {
               background: #263a42;
+              border-bottom: 4px solid #6065ff;
 
               a {
                 color: #c5d1d8;
@@ -214,4 +216,16 @@ ul.wh-list-buttons {
 }
 .table>tbody>tr>td {
   border-top: 1px solid #cfdbe2;
+}
+
+
+.btn-primary {
+  background: #6065ff;
+  border-color: #6065ff;
+
+  &:hover {
+    background: #5356dc;
+    border-color: #5356dc;
+  }
+
 }

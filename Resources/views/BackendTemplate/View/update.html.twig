@@ -16,44 +16,50 @@
 
         <div class="col-md-8">
 
-            <ul class="nav nav-tabs" role="tablist">
+           <div class="tabs-container">
 
-                {% for key, tab in central.tabs %}
-                    <li role="presentation" {% if loop.first %}class="active"{% endif %}>
-                        <a href="{{ '#' ~ key }}" aria-controls="home" role="tab" data-toggle="tab">
-                            {% if tab.icon %}<i class="{{ 'fa fa-' ~ tab.icon }}"></i> {% endif %}{{ tab.name }}
-                        </a>
-                    </li>
-                {% endfor %}
+               <ul class="nav nav-tabs" role="tablist">
 
-                {% if central.viewLink is defined %}
-                    <li role="presentation" style="float:right;">
-                        <a href="{{ central.viewLink.url }}" target="_blank">
-                            {% if central.viewLink.icon %}
-                                <i class="{{ 'fa fa-' ~ central.viewLink.icon }}"></i>
-                            {% endif %}
-                            {{ central.viewLink.name }}
-                        </a>
-                    </li>
-                {% endif %}
+                   {% for key, tab in central.tabs %}
+                       <li role="presentation" {% if loop.first %}class="active"{% endif %}>
+                           <a href="{{ '#' ~ key }}" aria-controls="home" role="tab" data-toggle="tab">
+                               {% if tab.icon %}<i class="{{ 'fa fa-' ~ tab.icon }}"></i> {% endif %}{{ tab.name }}
+                           </a>
+                       </li>
+                   {% endfor %}
 
-            </ul>
+                   {% if central.viewLink is defined %}
+                       <li role="presentation" style="float:right;">
+                           <a href="{{ central.viewLink.url }}" target="_blank">
+                               {% if central.viewLink.icon %}
+                                   <i class="{{ 'fa fa-' ~ central.viewLink.icon }}"></i>
+                               {% endif %}
+                               {{ central.viewLink.name }}
+                           </a>
+                       </li>
+                   {% endif %}
 
-            <div class="tab-content">
+               </ul>
 
-                {% for key, tab in central.tabs %}
+               <div class="tab-content">
 
-                    <div role="tabpanel" class="tab-pane {% if loop.first %}active{% endif %}" id="{{ key }}">
+                   {% for key, tab in central.tabs %}
 
-                        {% for formZone in tab.formZones %}
-                            {{ macros.formZone(form, formZone) }}
-                        {% endfor %}
+                       <div role="tabpanel" class="panel-body tab-pane {% if loop.first %}active{% endif %}" id="{{ key }}">
 
-                    </div>
+                           {% for formZone in tab.formZones %}
+                               {{ macros.formZone(form, formZone) }}
+                           {% endfor %}
 
-                {% endfor %}
+                       </div>
 
-            </div>
+                   {% endfor %}
+
+               </div>
+
+
+           </div>
+
 
         </div>
 

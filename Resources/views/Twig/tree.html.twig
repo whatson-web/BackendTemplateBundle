@@ -8,6 +8,15 @@
     {%- endfor -%}
 {% endmacro %}
 
+{% block list %}
+    {% if item.hasChildren and options.depth is not same as(0) and item.displayChildren %}
+        {% import _self as knp_menu %}
+        <ol class="dd-list">
+            {{ block('children') }}
+        </ol>
+    {% endif %}
+{% endblock %}
+
 {% block item %}
     {% if item.displayed %}
         {# building the class of the item #}
@@ -39,8 +48,8 @@
         {%- endif %}
         {# displaying the item #}
         {% import _self as knp_menu %}
-        <li{{ knp_menu.attributes(attributes) }} data-id="{{ item.name }}">
-            <div class="tree-item">
+        <li class="dd-item" data-id="{{ item.name }}">
+            <div class="dd-handle">
                 {%- if item.uri is not empty and (not matcher.isCurrent(item) or options.currentAsLink) %}
                     {{ block('linkElement') }}
                 {%- else %}

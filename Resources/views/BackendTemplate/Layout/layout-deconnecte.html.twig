@@ -40,81 +40,12 @@
 
 </head>
 
-<body class="fixed-nav pace-done">
+<body class="gray-bg">
 
-<div id="wrapper">
-
-    {% import '@WHBackendTemplate/Twig/macros.html.twig' as macros %}
-
-    <header>
-
-        <nav class="navbar-default navbar-static-side" role="navigation">
-            <div class="sidebar-collapse">
-
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#">
-                        <img src="{{ asset('backend/img/logo.png') }}" class="img-responsive">
-                    </a>
-                </div>
-
-                {% set menuTemplate = '@WHBackendTemplate/Twig/menu.html.twig' %}
-
-                {% if globalConfig.menus.main is defined %}
-
-                    {% set menuOptions = {'menuSlug' : globalConfig.menus.main} %}
-                    {% set menu = knp_menu_get('WHSuperAdminBundle:Tree:menu', [], menuOptions) %}
-                    {{ knp_menu_render(menu, {allow_safe_labels : true, template: menuTemplate}) | raw }}
-
-                {% endif %}
-
-            </div>
-
-        </nav>
-
-    </header>
-
-    <div id="page-wrapper" class="gray-bg dashbard-1">
-
-        <div class="row border-bottom">
-            <nav class="navbar navbar-fixed-top" role="navigation">
-
-                <div class="navbar-header">
-                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
-                </div>
-
-                {% set menuTemplateTop = '@WHBackendTemplate/Twig/menu-top.html.twig' %}
-
-
-                {% if globalConfig.menus.right is defined %}
-
-                    {% set menuOptions = {'menuSlug' : globalConfig.menus.right, 'menuRight': true} %}
-                    {% set menu = knp_menu_get('WHSuperAdminBundle:Tree:menu', [], menuOptions) %}
-                    {{ knp_menu_render(menu, {allow_safe_labels : true, template: menuTemplateTop}) | raw }}
-
-                {% endif %}
-            </nav>
-        </div>
-
-            <div class="row wrapper border-bottom white-bg page-heading">
-                {% block title %}{% endblock %}
-                {% block breadcrumb %}{% endblock %}
-
-            </div>
-
-        <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="middle-box text-center loginscreen animated fadeInDown">
             {% block body %}{% endblock %}
 
         </div>
-
-    </div>
-
-    <div class="modal fade" id="modalAjax" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content"></div>
-        </div>
-    </div>
-
-
 
 </div>
 

@@ -24,11 +24,22 @@
 
             <div class="col-md-6">
 
-                <div class="wh-tree">
-                    {% set menuTemplate = '@WHBackendTemplate/Twig/tree.html.twig' %}
-                    {% set menuOptions = {'entityPathConfig' : entityPathConfig, 'urlData' : urlData} %}
-                    {% set menu = knp_menu_get('WHSuperAdminBundle:Tree:tree', [], menuOptions) %}
-                    {{ knp_menu_render(menu, {allow_safe_labels : true, template: menuTemplate}) | raw }}
+                <div class="wh-tree ibox">
+                    <div class="ibox-content">
+
+                        <div class="dd">
+
+                            {% set menuTemplate = '@WHBackendTemplate/Twig/tree.html.twig' %}
+                            {% set menuOptions = {'entityPathConfig' : entityPathConfig, 'urlData' : urlData} %}
+                            {% set menu = knp_menu_get('WHSuperAdminBundle:Tree:tree', [], menuOptions) %}
+                            {{ knp_menu_render(menu, {allow_safe_labels : true, template: menuTemplate}) | raw }}
+
+                        </div>
+
+
+
+                    </div>
+
                 </div>
 
             </div>
@@ -54,7 +65,7 @@
 
         <script type="text/javascript">
 
-            $('.wh-tree ul').each(function () {
+            $('.wh-tree ol').each(function () {
 
                 var list = $(this);
 
