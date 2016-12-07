@@ -21,8 +21,6 @@
     '@WHBackendTemplateBundle/Resources/public/plugins/inspinia/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css'
     '@WHBackendTemplateBundle/Resources/public/plugins/inspinia/css/plugins/iCheck/custom.css'
     '@WHBackendTemplateBundle/Resources/public/plugins/backend-template/inspinia-overwrite.css'
-
-
     filter="cssrewrite" %}
     <link rel="stylesheet" href="{{ asset_url }}"/>
     {% endstylesheets %}
@@ -40,7 +38,7 @@
 
 </head>
 
-<body class="fixed-nav pace-done">
+<body class="fixed-nav pace-done skin-3">
 
 <div id="wrapper">
 
@@ -51,18 +49,13 @@
         <nav class="navbar-default navbar-static-side" role="navigation">
             <div class="sidebar-collapse">
 
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#">
-                        <img src="{{ asset('backend/img/logo.png') }}" class="img-responsive">
-                    </a>
-                </div>
+                {{ render(controller('WHUserBundle:Backend/User:flapColumn')) }}
 
                 {% set menuTemplate = '@WHBackendTemplate/Twig/menu.html.twig' %}
 
                 {% if globalConfig.menus.main is defined %}
 
-                    {% set menuOptions = {'menuSlug' : globalConfig.menus.main} %}
-                    {% set menu = knp_menu_get('WHSuperAdminBundle:Tree:menu', [], menuOptions) %}
+                    {% set menu = knp_menu_get('BackendBundle:Menu:' ~ globalConfig.menus.main) %}
                     {{ knp_menu_render(menu, {allow_safe_labels : true, template: menuTemplate}) | raw }}
 
                 {% endif %}
@@ -79,31 +72,30 @@
             <nav class="navbar navbar-fixed-top" role="navigation">
 
                 <div class="navbar-header">
-                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary" href="#">
+                        <i class="fa fa-bars"></i>
+                    </a>
                 </div>
 
                 {% set menuTemplateTop = '@WHBackendTemplate/Twig/menu-top.html.twig' %}
 
-
                 {% if globalConfig.menus.right is defined %}
 
-                    {% set menuOptions = {'menuSlug' : globalConfig.menus.right, 'menuRight': true} %}
-                    {% set menu = knp_menu_get('WHSuperAdminBundle:Tree:menu', [], menuOptions) %}
+                    {% set menu = knp_menu_get('BackendBundle:Menu:' ~ globalConfig.menus.right) %}
                     {{ knp_menu_render(menu, {allow_safe_labels : true, template: menuTemplateTop}) | raw }}
 
                 {% endif %}
+
             </nav>
         </div>
 
-            <div class="row wrapper border-bottom white-bg page-heading">
-                {% block title %}{% endblock %}
-                {% block breadcrumb %}{% endblock %}
-
-            </div>
+        <div class="row wrapper border-bottom white-bg page-heading">
+            {% block title %}{% endblock %}
+            {% block breadcrumb %}{% endblock %}
+        </div>
 
         <div class="wrapper wrapper-content animated fadeInRight">
             {% block body %}{% endblock %}
-
         </div>
 
     </div>
@@ -114,22 +106,18 @@
         </div>
     </div>
 
-
-
 </div>
-
-
 
 {% javascripts
 '@WHBackendTemplateBundle/Resources/public/plugins/jquery/js/jquery.min.js' %}
 <script src="{{ asset_url }}"></script>
 {% endjavascripts %}
 
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.full.min.js"></script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.full.min.js"></script>
 
 {% javascripts
 '@WHBackendTemplateBundle/Resources/public/plugins/jquery-ui/js/jquery-ui.min.js'
-
 '@WHBackendTemplateBundle/Resources/public/plugins/inspinia/js/inspinia.js'
 '@WHBackendTemplateBundle/Resources/public/plugins/inspinia/js/plugins/iCheck/icheck.min.js'
 '@WHBackendTemplateBundle/Resources/public/plugins/inspinia/js/plugins/metisMenu/jquery.metisMenu.js'
