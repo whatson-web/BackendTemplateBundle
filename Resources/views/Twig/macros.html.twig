@@ -241,7 +241,9 @@
         {% if loop.first %}
             {% set value = attribute(entity, field) %}
         {% else %}
-            {% set value = attribute(value, field) %}
+            {% if value %}
+                {% set value = attribute(value, field) %}
+            {% endif %}
         {% endif %}
 
     {% endfor %}

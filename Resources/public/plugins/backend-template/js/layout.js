@@ -60,7 +60,11 @@ var iChek = function () {
 };
 
 var whLoadModal = function (modal, href) {
-    $('#' + modal + ' .modal-content').load(href);
+    $('#' + modal + ' .modal-content').html('');
+    $.get(href)
+        .done(function (data) {
+            $('#' + modal + ' .modal-content').html(data);
+        });
 };
 
 var initCountChars = function () {
@@ -75,7 +79,7 @@ var initCountChars = function () {
 
 var initSelect2 = function () {
     $('select').select2({
-        'width': '100%',
+        width: '100%'
     });
 };
 
@@ -97,6 +101,7 @@ var whFormFieldMultiple = function () {
             newTr.appendTo(tbody);
             whFormFieldMultipleDelete();
             whListButtonsWriteTdWidth();
+            initSelect2();
 
             return false;
         });
