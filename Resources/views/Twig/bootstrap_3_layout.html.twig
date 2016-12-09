@@ -2,18 +2,46 @@
 
 {% block elfinder_widget %}
     {% set attr = attr|merge({class: (attr.class|default('') ~ ' form-control')|trim}) %}
-    <input type="text" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} data-type="elfinder-input-field" />
+    <input type="text" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}
+           data-type="elfinder-input-field"/>
     {% if enable and instance is defined %}
         <script type="text/javascript" charset="utf-8">
-            document.addEventListener("DOMContentLoaded", function(event) {
-                $('[data-type="elfinder-input-field"][id="{{ id }}"]').on("click",function() {
-                    var childWin = window.open("{{path('elfinder', {'instance': instance, 'homeFolder': homeFolder })}}?id={{ id }}", "popupWindow", "height=450, width=900");
+            document.addEventListener("DOMContentLoaded", function (event) {
+                $('[data-type="elfinder-input-field"][id="{{ id }}"]').on("click", function () {
+                    var childWin = window.open("{{ path('elfinder', {'instance': instance, 'homeFolder': homeFolder }) }}?id={{ id }}", "popupWindow", "height=450, width=900");
                 });
             });
 
             function setValue(value, element_id) {
-                $('[data-type="elfinder-input-field"]' + (element_id ? '[id="'+ element_id +'"]': '')).val(value).change();
+                $('[data-type="elfinder-input-field"]' + (element_id ? '[id="' + element_id + '"]' : '')).val(value).change();
             }
         </script>
     {% endif %}
 {% endblock %}
+
+{%- block collection_widget -%}
+    {% if prototype is defined %}
+        {%- set attr = attr|merge({'data-prototype': include(form.vars.attr['data-form-template'], {'form': form.vars.prototype}) }) -%}
+    {% endif %}
+    <div class="wh-form-field-multiple">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <td>
+                    <a href="#" id="{{ 'add-' ~ form.vars.name }}" class="btn btn-xs btn-primary">Add</a>
+                </td>
+                {% for child in form.vars.prototype.children %}
+                    <td>{{ child.vars.label }}</td>
+                {% endfor %}
+            </tr>
+            </thead>
+            <tbody {{ block('widget_container_attributes') }}>
+            {% for child in form.children %}
+                <tr>
+                    {{ include(form.vars.attr['data-form-template'], {'form': child}) }}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{%- endblock collection_widget -%}

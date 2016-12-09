@@ -52,13 +52,11 @@ var handleJsonResponse = function (data) {
     }
 };
 
-var iChek = function() {
-
+var iChek = function () {
     $('.i-checks').iCheck({
         checkboxClass: 'icheckbox_square-green',
         radioClass: 'iradio_square-green',
     });
-
 };
 
 var whLoadModal = function (modal, href) {
@@ -86,10 +84,38 @@ var setCountChars = function (element) {
     element.parent().children('.wh-count-chars-display').html(nbChars + ' caractères');
 };
 
+var whFormFieldMultiple = function () {
+    $('.wh-form-field-multiple').each(function () {
+        var tbody = $(this).find('tbody');
+        $(this).find('thead a').click(function () {
+            var trNumbers = tbody.find('tr').length;
+
+            var newTr = tbody.attr('data-prototype');
+            newTr = newTr.replace(/__name__/g, trNumbers);
+            newTr = jQuery('<tr></tr>').html(newTr);
+
+            newTr.appendTo(tbody);
+            whFormFieldMultipleDelete();
+            whListButtonsWriteTdWidth();
+
+            return false;
+        });
+    });
+};
+
+var whFormFieldMultipleDelete = function () {
+    $('.wh-form-field-multiple a[data-btn-remove]').click(function () {
+        $(this).closest('tr').remove();
+        return false;
+    });
+};
+
 var functionToReloadOnAjaxRequest = function () {
     whListButtonsWriteTdWidth();
     whModal();
     whHandleModalAjaxForm();
+    whFormFieldMultiple();
+    whFormFieldMultipleDelete();
     initCountChars();
     initSelect2();
 };
@@ -97,6 +123,8 @@ var functionToReloadOnAjaxRequest = function () {
 $(window).ready(function () {
     whListButtonsWriteTdWidth();
     whModal();
+    whFormFieldMultiple();
+    whFormFieldMultipleDelete();
     initCountChars();
     initSelect2();
     iChek();
