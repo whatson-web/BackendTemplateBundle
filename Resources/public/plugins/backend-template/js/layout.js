@@ -85,7 +85,7 @@ var initSelect2 = function () {
 
 var setCountChars = function (element) {
     var nbChars = element.val().length;
-    element.parent().children('.wh-count-chars-display').html(nbChars + ' caractères');
+    element.parent().children('.wh-count-chars-display').html(nbChars + ' characters');
 };
 
 var whFormFieldMultiple = function () {
