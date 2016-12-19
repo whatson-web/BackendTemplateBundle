@@ -89,10 +89,23 @@ ul.wh-list-buttons {
 }
 
 
-body.mini-navbar #page-wrapper {
-  margin: 0 0 0 150px;
-}
 
 .select2-container--open {
   z-index: 10000;
+}
+
+.loader {
+  width: 30px;
+  height: 30px;
+  border-width: 5px;
+  display: none;
+  border: 5px solid #f3f3f3; /* Light grey */
+  border-top: 5px solid #1ab394; /* Blue */
+  border-radius: 50%;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

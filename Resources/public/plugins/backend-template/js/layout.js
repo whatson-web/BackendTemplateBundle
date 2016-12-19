@@ -32,6 +32,7 @@ var whHandleModalAjaxForm = function () {
     });
 
     form.on('submit', function () {
+        $('.loader').css('display', 'inline-block');
         $.post($(this).attr('action'), form.serialize())
             .done(function (data) {
                 handleJsonResponse(data);
