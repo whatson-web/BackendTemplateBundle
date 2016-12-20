@@ -32,6 +32,9 @@
 
                             {% set menuTemplate = '@WHBackendTemplate/Twig/tree.html.twig' %}
                             {% set menuOptions = {'entityPathConfig' : entityPathConfig, 'urlData' : urlData} %}
+                            {% if treeRootLabel is defined %}
+                                {% set menuOptions = menuOptions | merge ({'rootLabel': treeRootLabel}) %}
+                            {% endif %}
                             {% set menu = knp_menu_get('WHSuperAdminBundle:Tree:tree', [], menuOptions) %}
                             {{ knp_menu_render(menu, {allow_safe_labels : true, template: menuTemplate}) | raw }}
 
