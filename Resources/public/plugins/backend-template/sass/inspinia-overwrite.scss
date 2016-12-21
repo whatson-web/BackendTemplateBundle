@@ -1,6 +1,5 @@
 @import 'compass';
 
-
 ul.wh-list-buttons {
   margin: 0;
   padding: 0;
@@ -31,7 +30,6 @@ ul.wh-list-buttons {
   }
 
 }
-
 
 .ibox-title {
 
@@ -88,7 +86,53 @@ ul.wh-list-buttons {
   }
 }
 
+.wh-datetime {
 
+  > * {
+    display: block;
+
+    > * {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    &.date {
+
+      > * {
+        margin: 0 5px 0 0;
+      }
+
+      .day {
+        width: 50px;
+      }
+
+      .month {
+        width: 70px;
+      }
+
+      .year {
+        width: 60px;
+      }
+
+    }
+
+    &.time {
+      margin: 10px 0 0 0;
+
+      > span {
+        width: auto;
+        margin: 0 2px;
+      }
+
+      > * {
+        width: 50px;
+      }
+
+    }
+
+  }
+
+}
 
 .select2-container--open {
   z-index: 10000;
@@ -106,6 +150,10 @@ ul.wh-list-buttons {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
