@@ -94,7 +94,7 @@
     {% if widget == 'single_text' %}
         {{- block('form_widget_simple') -}}
     {% else -%}
-        {% set attr = attr|merge({class: (attr.class|default('') ~ ' form-inline')|trim}) -%}
+        {% set attr = attr|merge({class: (attr.class|default('') ~ ' wh-date')|trim}) -%}
         {% if datetime is not defined or not datetime -%}
             <div {{ block('widget_container_attributes') -}}>
         {%- endif %}

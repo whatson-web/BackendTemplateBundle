@@ -134,6 +134,28 @@ ul.wh-list-buttons {
 
 }
 
+.wh-date {
+
+  > * {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 5px 0 0;
+  }
+
+  .day {
+    width: 50px;
+  }
+
+  .month {
+    width: 70px;
+  }
+
+  .year {
+    width: 60px;
+  }
+
+}
+
 .select2-container--open {
   z-index: 10000;
 }
