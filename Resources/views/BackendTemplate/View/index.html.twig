@@ -1,4 +1,8 @@
-{% extends '@WHBackendTemplate/BackendTemplate/Layout/layout.html.twig' %}
+{% if layout is not defined %}
+    {% set layout = '@WHBackendTemplate/BackendTemplate/Layout/layout.html.twig' %}
+{% endif %}
+
+{% extends layout %}
 
 {% block title %}<h1>{{ title }}</h1>{% endblock %}
 
