@@ -35,11 +35,17 @@
             <thead>
             <tr>
                 <td>
-                    <a href="#" id="{{ 'add-' ~ form.vars.name }}" class="btn btn-xs btn-primary">Add</a>
+                    <a href="#" id="{{ 'add-' ~ form.vars.name }}" class="btn btn-xs btn-primary">
+                        <i class="fa fa-plus"></i>
+                    </a>
                 </td>
-                {% for child in form.vars.prototype.children %}
-                    <td>{{ child.vars.label }}</td>
-                {% endfor %}
+                {% if form.vars.attr['data-form-template-head'] is defined %}
+                    {% include form.vars.attr['data-form-template-head'] %}
+                {% else %}
+                    {% for child in form.vars.prototype.children %}
+                        <td>{{ child.vars.label }}</td>
+                    {% endfor %}
+                {% endif %}
             </tr>
             </thead>
             <tbody {{ block('widget_container_attributes') }}>
