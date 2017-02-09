@@ -103,6 +103,7 @@ var whFormFieldMultiple = function () {
             whFormFieldMultipleDelete();
             whListButtonsWriteTdWidth();
             initSelect2();
+            initTinyMCE();
 
             return false;
         });
