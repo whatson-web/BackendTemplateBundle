@@ -1,97 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');
 @import 'compass';
-
-header {
-
-  .navbar-default {
-    border-color: transparent;
-    @include border-radius(0);
-    background-color: rgb(46, 66, 76); // Old browsers
-    @include filter-gradient(#283c46, #354d56, vertical); // IE6-9
-    @include background-image(linear-gradient(top, rgb(40, 60, 70) 0%, rgba(53, 77, 86, 1) 100%));
-
-    .container-fluid {
-
-      .navbar-collapse {
-
-        .navbar-nav {
-
-          li {
-            border-bottom: 4px solid transparent;
-
-            a {
-              color: #9ca1a5;
-            }
-
-            &:hover {
-              background: #263a42;
-              border-bottom: 4px solid #6065ff;
-
-              a {
-                color: #c5d1d8;
-              }
-
-            }
-
-          }
-
-        }
-
-      }
-
-    }
-
-  }
-
-}
-
-body {
-  background: #f5f7fa;
-  font-family: 'Open Sans', sans-serif;
-
-  .breadcrumb {
-    background: #FFF;
-    @include border-radius(0px);
-    border: 1px solid #e7eaec;
-    margin: 0 0 50px 0;
-
-    li {
-
-      a {
-        color: #929292;
-        font-size: 12px;
-      }
-
-      &:last-child {
-
-        a {
-          font-weight: 700;
-        }
-
-      }
-
-    }
-
-  }
-
-  input[type="text"] {
-    @include border-radius(0);
-  }
-
-}
-
-h1 {
-  margin: 0 0 20px 0;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 24px;
-  line-height: 100%;
-  color: #6065ff;
-
-}
-
-.tab-content > .tab-pane {
-  padding: 20px 0 0 0;
-}
 
 ul.wh-list-buttons {
   margin: 0;
@@ -124,57 +31,6 @@ ul.wh-list-buttons {
 
 }
 
-.wh-table {
-  margin: 0;
-}
-
-.wh-panel {
-  @include border-radius(0px);
-  background: #FFF;
-  border-color: #e7eaec;
-  border-style: solid solid none;
-  border-width: 1px 0;
-  @include box-shadow(0 3px 8px 1px rgba(0, 0, 0, .09));
-
-  .panel-heading {
-    background: #FFF;
-    color: #000;
-    letter-spacing: 0.03em;
-    @include border-radius(0px);
-    border-color: #cfdbe2;
-
-    table {
-      width: 100%;
-
-      tr {
-
-        td {
-          vertical-align: middle;
-
-          &.right {
-            text-align: right;
-          }
-
-          span {
-            color: #5b65ff;
-            font-weight: 600;
-          }
-
-        }
-
-      }
-
-    }
-
-  }
-
-  .panel-footer {
-    border-color: #cfdbe2;
-    background-color: #f5f7fa;
-  }
-
-}
-
 .wh-tree {
   background: #FFF;
   padding: 20px;
@@ -183,6 +39,8 @@ ul.wh-list-buttons {
   border-width: 1px 0;
 
   ul {
+    display: block;
+    position: relative;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -200,45 +58,120 @@ ul.wh-list-buttons {
     }
 
   }
-
-}
-
-.table-striped > tbody > tr:nth-of-type(odd) {
-  background-color: #f5f7fa;
-}
-
-.table > thead > tr > th {
-  border-bottom: 2px solid #cfdbe2;
-}
-
-.table > tbody > tr > td {
-  border-top: 1px solid #cfdbe2;
-}
-
-.btn-primary {
-  background: #6065ff;
-  border-color: #6065ff;
-
-  &:hover {
-    background: #5356dc;
-    border-color: #5356dc;
-  }
-
 }
 
 .wh-datetime {
 
   > * {
-    display: inline-block;
-    vertical-align: top;
-
-    &.time {
-      margin: 0 0 0 10px;
-    }
+    display: block;
 
     > * {
       display: inline-block;
-      vertical-align: top;
+      vertical-align: middle;
+    }
+
+    &.date {
+
+      > * {
+        margin: 0 5px 0 0;
+      }
+
+      .day {
+        width: 50px;
+      }
+
+      .month {
+        width: 70px;
+      }
+
+      .year {
+        width: 60px;
+      }
+
+    }
+
+    &.time {
+      margin: 10px 0 0 0;
+
+      > span {
+        width: auto;
+        margin: 0 2px;
+      }
+
+      > * {
+        width: 50px;
+      }
+
+    }
+
+  }
+
+}
+
+.wh-date {
+
+  > * {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 5px 0 0;
+  }
+
+  .day {
+    width: 50px;
+  }
+
+  .month {
+    width: 70px;
+  }
+
+  .year {
+    width: 60px;
+  }
+
+}
+
+.select2-container--open {
+  z-index: 10000;
+}
+
+.loader {
+  width: 30px;
+  height: 30px;
+  border-width: 5px;
+  display: none;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #1ab394;
+  border-radius: 50%;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.pagination {
+  display: block;
+  margin: 0;
+  text-align: center;
+  font-size: 0;
+
+  li {
+    display: inline-block;
+    vertical-align: middle;
+
+    > a,
+    > span {
+      display: block;
+      padding: 4px 10px;
+      border: 1px solid #DDDDDD;
+      font-size: 14px;
+      line-height: 100%;
+      color: #676a6c;
     }
 
   }
