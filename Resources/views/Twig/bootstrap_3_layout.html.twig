@@ -50,7 +50,7 @@
             </thead>
             <tbody {{ block('widget_container_attributes') }}>
             {% for child in form.children %}
-                <tr>
+                <tr data-id="{{ child.vars.data.id }}">
                     {{ include(form.vars.attr['data-form-template'], {'form': child}) }}
                 </tr>
             {% endfor %}

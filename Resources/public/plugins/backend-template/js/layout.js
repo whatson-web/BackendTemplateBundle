@@ -117,6 +117,31 @@ var whFormFieldMultipleDelete = function () {
     });
 };
 
+var initCollectionSortable = function () {
+    $('.modal-body tbody').each(function () {
+
+        if ($(this).data('sortable-url')) {
+            var list = $(this);
+
+            list.sortable({
+                placeholder: 'highlight',
+                axis: 'y',
+                stop: function () {
+                    $.ajax({
+                        type: 'POST',
+                        url: $(this).data('sortable-url'),
+                        data: list.sortable('serialize', {attribute: 'data-id', key: 'ids[]', expression: /(.+)/}),
+                        cache: false
+                    });
+                }
+            });
+
+            $(this).disableSelection();
+        }
+
+    });
+};
+
 var functionToReloadOnAjaxRequest = function () {
     whListButtonsWriteTdWidth();
     whModal();
@@ -125,6 +150,7 @@ var functionToReloadOnAjaxRequest = function () {
     whFormFieldMultipleDelete();
     initCountChars();
     initSelect2();
+    initCollectionSortable();
 };
 
 $(window).ready(function () {
@@ -135,4 +161,5 @@ $(window).ready(function () {
     initCountChars();
     initSelect2();
     iChek();
+    initCollectionSortable();
 });
