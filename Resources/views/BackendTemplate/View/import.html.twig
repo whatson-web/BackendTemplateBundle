@@ -1,0 +1,83 @@
+{% if layout is not defined %}
+    {% set layout = '@WHBackendTemplate/BackendTemplate/Layout/layout.html.twig' %}
+{% endif %}
+
+{% extends layout %}
+
+{% block title %}<h1>{{ title }}</h1>{% endblock %}
+
+{% block breadcrumb %}
+    {% include '@WHBackendTemplate/BackendTemplate/Element/breadcrumb.html.twig' with {'breadcrumb': breadcrumb} %}
+{% endblock %}
+
+{% block body %}
+
+    {% form_theme importFormPanelProperties.form '@WHBackendTemplate/Twig/bootstrap_3_layout.html.twig' %}
+
+    {{ form_start(importFormPanelProperties.form) }}
+    {{ macros.panel(importFormPanelProperties) }}
+    {{ form_end(importFormPanelProperties.form) }}
+
+    {% if importResponse.errors is defined or importResponse.data is defined %}
+
+        {% form_theme confirmationFormPanelProperties.form '@WHBackendTemplate/Twig/bootstrap_3_layout.html.twig' %}
+
+        {{ form_start(confirmationFormPanelProperties.form) }}
+
+        <div class="ibox panel-default">
+
+            {{ macros.panelHeader(confirmationFormPanelProperties) }}
+
+            <div class="ibox-content" style="overflow-x:scroll;">
+
+                {% do confirmationFormPanelProperties.form.submit.setRendered %}
+
+                {% if importResponse.errors is defined %}
+
+                    <div class="alert alert-danger">
+                        {% for error in importResponse.errors %}
+                            {{ error }}<br>
+                        {% endfor %}
+                    </div>
+
+                {% else %}
+
+                    <table class="table table-striped">
+
+                        <thead>
+                        <tr>
+                            {% for column in importResponse.columns %}
+                                <th>{{ column }}</th>
+                            {% endfor %}
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        {% for row in importResponse.data %}
+                            <tr>
+                                {% for column in importResponse.columns %}
+                                    <td>{{ row[column] }}</td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+
+                    </table>
+
+                {% endif %}
+
+                {% if confirmationFormPanelProperties.footerListButtons is defined %}
+                    <div>
+                        {{ macros.listButtons(confirmationFormPanelProperties.footerListButtons) }}
+                    </div>
+                {% endif %}
+
+            </div>
+
+        </div>
+
+        {{ form_end(confirmationFormPanelProperties.form) }}
+
+    {% endif %}
+
+{% endblock %}

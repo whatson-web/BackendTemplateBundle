@@ -181,23 +181,7 @@
 
     <div class="ibox {{ 'panel-' ~ properties.color }}">
 
-        <div class="ibox-title">
-
-            <table>
-                <tr>
-                    <td>
-                        <span>{% if properties.icon is defined %}<i
-                                class="{{ 'fa fa-' ~ properties.icon }}"></i> {% endif %}{{ properties.headerLabel }}</span>
-                    </td>
-                    {% if properties.headerListButtons is defined %}
-                        <td class="right">
-                            {{ _self.listButtons(properties.headerListButtons) }}
-                        </td>
-                    {% endif %}
-                </tr>
-            </table>
-
-        </div>
+        {{ _self.panelHeader(properties) }}
 
         <div class="ibox-content">
             {% if properties.formFields is defined %}
@@ -226,6 +210,30 @@
             {% endif %}
 
         </div>
+
+    </div>
+
+{% endspaceless %}{% endmacro %}
+
+{% macro panelHeader(properties) %}{% spaceless %}
+
+    <div class="ibox-title">
+
+        <table>
+            <tr>
+                <td>
+                    <span>
+                        {% if properties.icon is defined %}<i class="{{ 'fa fa-' ~ properties.icon }}"></i> {% endif %}
+                        {{ properties.headerLabel }}
+                    </span>
+                </td>
+                {% if properties.headerListButtons is defined %}
+                    <td class="right">
+                        {{ _self.listButtons(properties.headerListButtons) }}
+                    </td>
+                {% endif %}
+            </tr>
+        </table>
 
     </div>
 
