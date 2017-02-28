@@ -256,7 +256,11 @@
 
     {% endfor %}
 
-    {{ value }}
+    {% if value.timestamp is defined %}
+        {{ value.timestamp }}
+    {% else %}
+        {{ value }}
+    {% endif %}
 
 {% endspaceless %}{% endmacro %}
 
@@ -347,12 +351,14 @@
                                     {{ _self.getValueOfEntity(entity, property) }}
                                 </a>
                             </td>
+                        {% elseif value.type is defined and value.type == 'date' %}
+                            <td>{{ _self.getValueOfEntity(entity, property) | date(value.dateFormat) }}</td>
                         {% else %}
 
                             {% if value.type is defined and value.type == 'boolean' %}
                                 <td>{% if _self.getValueOfEntity(entity, property) %}Oui{% else %}Non{% endif %}</td>
                             {% else %}
-                                <td>{{ _self.getValueOfEntity(entity, property) }}</td>
+                                <td>{{ _self.getValueOfEntity(entity, property) | nl2br | raw }}</td>
                             {% endif %}
 
                         {% endif %}
