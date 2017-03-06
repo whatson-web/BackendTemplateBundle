@@ -142,8 +142,15 @@ var initCollectionSortable = function () {
     });
 };
 
+var writeHrefWhenReady = function () {
+    $('a[data-href]').each(function () {
+        $(this).attr('href', $(this).attr('data-href'));
+    });
+};
+
 var functionToReloadOnAjaxRequest = function () {
     whListButtonsWriteTdWidth();
+    writeHrefWhenReady();
     whModal();
     whHandleModalAjaxForm();
     whFormFieldMultiple();
@@ -155,6 +162,7 @@ var functionToReloadOnAjaxRequest = function () {
 
 $(window).ready(function () {
     whListButtonsWriteTdWidth();
+    writeHrefWhenReady();
     whModal();
     whFormFieldMultiple();
     whFormFieldMultipleDelete();

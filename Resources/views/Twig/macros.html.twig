@@ -32,8 +32,19 @@
             <li>
                 {% if button.buttonType == 'link' %}
 
-                    <a {% if button.href is defined %}href="{{ button.href }}"{% endif %}
-                       class="{{ button.class }}" {% if button.modal is defined %}data-modal="modalAjax"{% endif %} {% if button.target is defined %}target="{{ button.target }}"{% endif %} {% if button.confirm is defined %}onclick="return confirm('{{ button.confirm }}')"{% endif %} >{{ button.label | raw }}</a>
+                    <a
+                            {% if button.href is defined %}
+                                {% if button.modal is defined or button.confirm is defined %}
+                                    data-href="{{ button.href }}"
+                                {% else %}
+                                    href="{{ button.href }}"
+                                {% endif %}
+                            {% endif %}
+                            class="{{ button.class }}"
+                            {% if button.modal is defined %}data-modal="modalAjax"{% endif %}
+                            {% if button.target is defined %}target="{{ button.target }}"{% endif %}
+                            {% if button.confirm is defined %}onclick="return confirm('{{ button.confirm }}')"{% endif %}
+                    >{{ button.label | raw }}</a>
 
                 {% elseif button.buttonType == 'button' %}
 
