@@ -97,54 +97,50 @@
 
     {% for formField, properties  in formFields %}
 
-        {% if properties.type is defined and properties.type == 'wh_file' %}
+        {% if properties.col is not defined %}
+            {% set properties = properties | merge({'col' : 12}) %}
+        {% endif %}
+
+        {% set col = col + properties.col %}
+
+        {% if loop.first or col > 12 %}
+
+            {% if not loop.first %}
+                </div>
+                {% set col = properties.col %}
+            {% endif %}
 
             <div class="row">
-                <div class="col-md-12">
-                    {% set attribute = attribute(attribute(form, formField), 'url') %}
-                    {% set data = attribute(form.vars.data, formField) %}
-                    {% if data is not empty %}
-                        <div class="form-group">
-                            <div class="control-label">
-                                {% if data.isImage %}
-                                    <a href="{{ wh_media_baseurl ~ attribute(data, 'url') }}" target="_blank">
-                                        <img src="{{ wh_media_baseurl ~ attribute(data, 'url') }}"
-                                             class="img-responsive">
-                                    </a>
-                                {% else %}
-                                    <a href="{{ attribute(data, 'url') }}" class="btn btn-primary btn-xs"
-                                       target="_blank">
-                                        <i class="fa fa-eye"></i>
-                                    </a>
-                                {% endif %}
-                            </div>
+
+        {% endif %}
+
+        <div class="{{ 'col-md-' ~ properties.col }}">
+
+            {% if properties.type is defined and properties.type == 'wh_file' %}
+
+                {% set attribute = attribute(attribute(form, formField), 'url') %}
+                {% set data = attribute(form.vars.data, formField) %}
+                {% if data is not empty %}
+                    <div class="form-group">
+                        <div class="control-label">
+                            {% if data.isImage %}
+                                <a href="{{ wh_media_baseurl ~ attribute(data, 'url') }}" target="_blank">
+                                    <img src="{{ wh_media_baseurl ~ attribute(data, 'url') }}"
+                                         class="img-responsive">
+                                </a>
+                            {% else %}
+                                <a href="{{ attribute(data, 'url') }}" class="btn btn-primary btn-xs"
+                                   target="_blank">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                            {% endif %}
                         </div>
-                    {% endif %}
-                    {{ form_row(attribute) }}
-                    {{ form_row(attribute(attribute(form, formField), 'alt')) }}
-                </div>
-            </div>
-
-        {% else %}
-
-            {% if properties.col is not defined %}
-                {% set properties = properties | merge({'col' : 12}) %}
-            {% endif %}
-
-            {% set col = col + properties.col %}
-
-            {% if loop.first or col > 12 %}
-
-                {% if not loop.first %}
                     </div>
-                    {% set col = properties.col %}
                 {% endif %}
+                {{ form_row(attribute) }}
+                {{ form_row(attribute(attribute(form, formField), 'alt')) }}
 
-                <div class="row">
-
-            {% endif %}
-
-            <div class="{{ 'col-md-' ~ properties.col }}">
+            {% else %}
 
                 {% set formFieldFields = formField | split('.') %}
                 {% set formFieldValue = '' %}
@@ -160,12 +156,12 @@
                 {% endfor %}
 
                 {{ form_row(formFieldValue) }}
-            </div>
 
-            {% if loop.last %}
-                </div>
             {% endif %}
+        </div>
 
+        {% if loop.last %}
+            </div>
         {% endif %}
 
     {% endfor %}
