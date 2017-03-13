@@ -1,5 +1,134 @@
 @import 'compass';
 
+.wh-tree {
+  background: #FFF;
+  padding: 20px;
+  border-color: #e7eaec;
+  border-style: solid solid none;
+  border-width: 1px 0;
+
+  .dd {
+    position: relative;
+    display: block;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 13px;
+    line-height: 20px;
+  }
+
+  .dd-list {
+    display: block;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .dd-list .dd-list {
+    padding-left: 30px;
+  }
+
+  .dd-collapsed .dd-list {
+    display: none;
+  }
+
+  .dd-item,
+  .dd-empty,
+  .dd-placeholder {
+    display: block;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    min-height: 20px;
+    font-size: 13px;
+    line-height: 20px;
+  }
+
+  .dd-handle {
+    display: block;
+    margin: 5px 0;
+    color: #333;
+    text-decoration: none;
+    border: 1px solid #e7eaec;
+    background: #f5f5f5;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+
+    a {
+      display: block;
+      padding: 5px 10px;
+    }
+
+  }
+
+  .dd-handle span {
+    font-weight: bold;
+  }
+
+  .dd-handle:hover {
+    background: #f0f0f0;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  .dd-item > button {
+    display: block;
+    position: relative;
+    cursor: pointer;
+    float: left;
+    width: 25px;
+    height: 20px;
+    margin: 5px 0;
+    padding: 0;
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    border: 0;
+    background: transparent;
+    font-size: 12px;
+    line-height: 1;
+    text-align: center;
+    font-weight: bold;
+  }
+
+  .dd-item > button:before {
+    content: '+';
+    display: block;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    text-indent: 0;
+  }
+
+  .dd-item > button[data-action="collapse"]:before {
+    content: '-';
+  }
+
+  ul {
+    display: block;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    .tree-item {
+      margin: 0 0 10px 0;
+      padding: 10px;
+      border: 1px solid #cfdbe2;
+      background: #fafbfc;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+  }
+
+}
+
 ul.wh-list-buttons {
   margin: 0;
   padding: 0;
@@ -29,35 +158,6 @@ ul.wh-list-buttons {
     text-align: center;
   }
 
-}
-
-.wh-tree {
-  background: #FFF;
-  padding: 20px;
-  border-color: #e7eaec;
-  border-style: solid solid none;
-  border-width: 1px 0;
-
-  ul {
-    display: block;
-    position: relative;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-
-    .tree-item {
-      margin: 0 0 10px 0;
-      padding: 10px;
-      border: 1px solid #cfdbe2;
-      background: #fafbfc;
-
-    }
-
-    ul {
-      padding-left: 20px;
-    }
-
-  }
 }
 
 .wh-datetime {
@@ -134,46 +234,8 @@ ul.wh-list-buttons {
   z-index: 10000;
 }
 
-.loader {
-  width: 30px;
-  height: 30px;
-  border-width: 5px;
-  display: none;
-  border: 5px solid #f3f3f3;
-  border-top: 5px solid #1ab394;
-  border-radius: 50%;
-  animation: spin 2s linear infinite;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
 .pagination {
   display: block;
   margin: 0;
   text-align: center;
-  font-size: 0;
-
-  li {
-    display: inline-block;
-    vertical-align: middle;
-
-    > a,
-    > span {
-      display: block;
-      padding: 4px 10px;
-      border: 1px solid #DDDDDD;
-      font-size: 14px;
-      line-height: 100%;
-      color: #676a6c;
-    }
-
-  }
-
 }

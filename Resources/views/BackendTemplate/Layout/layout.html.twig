@@ -16,11 +16,10 @@
     <![endif]-->
 
     {% stylesheets
-    '@WHBackendTemplateBundle/Resources/public/plugins/bootstrap/css/bootstrap.min.css'
-    '@WHBackendTemplateBundle/Resources/public/plugins/inspinia/css/style.css'
-    '@WHBackendTemplateBundle/Resources/public/plugins/inspinia/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css'
-    '@WHBackendTemplateBundle/Resources/public/plugins/inspinia/css/plugins/iCheck/custom.css'
-    '@WHBackendTemplateBundle/Resources/public/plugins/backend-template/inspinia-overwrite.css'
+    '@WHBackendTemplateBundle/Resources/public/plugins/material/css/jquery.mCustomScrollbar.min.css'
+    '@WHBackendTemplateBundle/Resources/public/plugins/material/css/animate.min.css'
+    '@WHBackendTemplateBundle/Resources/public/plugins/material/css/app_1.min.css'
+    '@WHBackendTemplateBundle/Resources/public/plugins/material/css/app_2.min.css'
     '@WHBackendTemplateBundle/Resources/public/plugins/backend-template/layout.css'
     filter="cssrewrite" %}
     <link rel="stylesheet" href="{{ asset_url }}"/>
@@ -28,6 +27,9 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css"/>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 
     {% stylesheets
     filter="scssphp" %}
@@ -39,74 +41,82 @@
 
 </head>
 
-<body class="fixed-nav pace-done skin-3">
+<body>
 
-<div id="wrapper">
+{% import '@WHBackendTemplate/Twig/macros.html.twig' as macros %}
 
-    {% import '@WHBackendTemplate/Twig/macros.html.twig' as macros %}
+<header id="header" class="clearfix" data-ma-theme="blue">
 
-    <header>
+    <ul class="h-inner">
 
-        <nav class="navbar-default navbar-static-side" role="navigation">
-            <div class="sidebar-collapse">
+        <li class="hi-trigger ma-trigger" data-ma-action="sidebar-open" data-ma-target="#sidebar">
+            <div class="line-wrap">
+                <div class="line top"></div>
+                <div class="line center"></div>
+                <div class="line bottom"></div>
+            </div>
+        </li>
 
-                {{ render(controller('WHUserBundle:Backend/User:flapColumn')) }}
+        <li class="hi-logo hidden-xs">
+            <span>{{ project_name }}</span>
+        </li>
 
-                {% set menuTemplate = '@WHBackendTemplate/Twig/menu.html.twig' %}
+    </ul>
 
-                {% if globalConfig.menus.main is defined %}
+</header>
 
-                    {% set menu = knp_menu_get('BackendBundle:Menu:' ~ globalConfig.menus.main) %}
-                    {{ knp_menu_render(menu, {allow_safe_labels : true, template: menuTemplate}) | raw }}
+<section id="main">
 
-                {% endif %}
+    {% block breadcrumb %}{% endblock %}
 
+    <aside id="sidebar" class="sidebar c-overflow">
+
+        <div class="s-profile">
+
+            {{ render(controller('WHUserBundle:Backend/User:flapColumn')) }}
+
+            {% set menuTemplateTop = '@WHBackendTemplate/Twig/menu-top.html.twig' %}
+
+            {% if globalConfig.menus.right is defined %}
+
+                {% set menu = knp_menu_get('BackendBundle:Menu:' ~ globalConfig.menus.right) %}
+                {{ knp_menu_render(menu, {allow_safe_labels : true, template: menuTemplateTop}) | raw }}
+
+            {% endif %}
+
+        </div>
+
+        {% set menuTemplate = '@WHBackendTemplate/Twig/menu.html.twig' %}
+
+        {% if globalConfig.menus.main is defined %}
+
+            {% set menu = knp_menu_get('BackendBundle:Menu:' ~ globalConfig.menus.main) %}
+            {{ knp_menu_render(menu, {allow_safe_labels : true, template: menuTemplate}) | raw }}
+
+        {% endif %}
+
+    </aside>
+
+    <section id="content">
+
+        <div class="container">
+
+            <div class="block-header">
+                {% block title %}{% endblock %}
             </div>
 
-        </nav>
-
-    </header>
-
-    <div id="page-wrapper" class="gray-bg dashbard-1">
-
-        <div class="row border-bottom">
-            <nav class="navbar navbar-fixed-top" role="navigation">
-
-                <div class="navbar-header">
-                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary" href="#">
-                        <i class="fa fa-bars"></i>
-                    </a>
-                </div>
-
-                {% set menuTemplateTop = '@WHBackendTemplate/Twig/menu-top.html.twig' %}
-
-                {% if globalConfig.menus.right is defined %}
-
-                    {% set menu = knp_menu_get('BackendBundle:Menu:' ~ globalConfig.menus.right) %}
-                    {{ knp_menu_render(menu, {allow_safe_labels : true, template: menuTemplateTop}) | raw }}
-
-                {% endif %}
-
-            </nav>
-        </div>
-
-        <div class="row wrapper border-bottom white-bg page-heading">
-            {% block title %}{% endblock %}
-            {% block breadcrumb %}{% endblock %}
-        </div>
-
-        <div class="wrapper wrapper-content animated fadeInRight">
             {% block body %}{% endblock %}
+
         </div>
 
-    </div>
+    </section>
 
-    <div class="modal fade" id="modalAjax" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content"></div>
-        </div>
-    </div>
+</section>
 
+<div class="modal fade" id="modalAjax" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content"></div>
+    </div>
 </div>
 
 {% javascripts
@@ -118,13 +128,10 @@
         src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.full.min.js"></script>
 
 {% javascripts
-'@WHBackendTemplateBundle/Resources/public/plugins/jquery-ui/js/jquery-ui.min.js'
-'@WHBackendTemplateBundle/Resources/public/plugins/inspinia/js/inspinia.js'
-'@WHBackendTemplateBundle/Resources/public/plugins/inspinia/js/plugins/iCheck/icheck.min.js'
-'@WHBackendTemplateBundle/Resources/public/plugins/inspinia/js/plugins/metisMenu/jquery.metisMenu.js'
-'@WHBackendTemplateBundle/Resources/public/plugins/inspinia/js/plugins/pace/pace.min.js'
-'@WHBackendTemplateBundle/Resources/public/plugins/inspinia/js/plugins/slimscroll/jquery.slimscroll.min.js'
 '@WHBackendTemplateBundle/Resources/public/plugins/bootstrap/js/bootstrap.min.js'
+'@WHBackendTemplateBundle/Resources/public/plugins/material/js/jquery.mCustomScrollbar.concat.min.js'
+'@WHBackendTemplateBundle/Resources/public/plugins/material/js/app.min.js'
+'@WHBackendTemplateBundle/Resources/public/plugins/material/js/waves.min.js'
 '@WHBackendTemplateBundle/Resources/public/plugins/backend-template/js/layout.js' %}
 <script src="{{ asset_url }}"></script>
 {% endjavascripts %}

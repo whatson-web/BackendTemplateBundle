@@ -53,13 +53,6 @@ var handleJsonResponse = function (data) {
     }
 };
 
-var iChek = function () {
-    $('.i-checks').iCheck({
-        checkboxClass: 'icheckbox_square-green',
-        radioClass: 'iradio_square-green',
-    });
-};
-
 var whLoadModal = function (modal, href) {
     $('#' + modal + ' .modal-content').html('');
     $.get(href)
@@ -168,6 +161,5 @@ $(window).ready(function () {
     whFormFieldMultipleDelete();
     initCountChars();
     initSelect2();
-    iChek();
     initCollectionSortable();
 });

@@ -186,11 +186,11 @@
         {% set properties = properties | merge({'color' : 'default'}) %}
     {% endif %}
 
-    <div class="ibox {{ 'panel-' ~ properties.color }}">
+    <div class="card {{ 'panel-' ~ properties.color }}">
 
         {{ _self.panelHeader(properties) }}
 
-        <div class="ibox-content">
+        <div class="card-body {% if properties.tableFields is not defined %}card-padding{% endif %}">
             {% if properties.formFields is defined %}
                 {{ _self.formFields(properties.form, properties.formFields) }}
             {% endif %}
@@ -224,19 +224,21 @@
 
 {% macro panelHeader(properties) %}{% spaceless %}
 
-    <div class="ibox-title">
+    <div class="card-header">
 
         <table>
             <tr>
                 <td>
-                    <span>
+                    <h2>
                         {% if properties.icon is defined %}<i class="{{ 'fa fa-' ~ properties.icon }}"></i> {% endif %}
                         {{ properties.headerLabel }}
-                    </span>
+                    </h2>
                 </td>
                 {% if properties.headerListButtons is defined %}
                     <td class="right">
-                        {{ _self.listButtons(properties.headerListButtons) }}
+                        <div class="actions">
+                            {{ _self.listButtons(properties.headerListButtons) }}
+                        </div>
                     </td>
                 {% endif %}
             </tr>

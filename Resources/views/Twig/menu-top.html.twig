@@ -11,7 +11,7 @@
 {% block list %}
     {% if item.hasChildren and options.depth is not same as(0) and item.displayChildren %}
         {% import _self as knp_menu %}
-        <ul class="nav navbar-top-links navbar-right">
+        <ul class="main-menu">
             {{ block('children') }}
         </ul>
     {% endif %}

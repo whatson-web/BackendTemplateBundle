@@ -1,6 +1,6 @@
 {% extends '@WHBackendTemplate/BackendTemplate/Layout/layout.html.twig' %}
 
-{% block title %}<h1>{{ title }}</h1>{% endblock %}
+{% block title %}<h2>{{ title }}</h2>{% endblock %}
 
 {% block breadcrumb %}
     {% include '@WHBackendTemplate/BackendTemplate/Element/breadcrumb.html.twig' with {'breadcrumb': breadcrumb} %}
@@ -16,62 +16,65 @@
 
         <div class="col-md-8">
 
-            <div class="tabs-container">
+            <div class="card">
 
-                <ul class="nav nav-tabs" role="tablist">
+                <div class="card-body">
 
-                    {% for key, tab in central.tabs %}
-                        <li role="presentation" {% if loop.first %}class="active"{% endif %}>
-                            <a href="{{ '#' ~ key }}" aria-controls="home" role="tab" data-toggle="tab">
-                                {% if tab.icon %}<i class="{{ 'fa fa-' ~ tab.icon }}"></i> {% endif %}{{ tab.name }}
-                            </a>
-                        </li>
-                    {% endfor %}
+                    <ul class="tab-nav" role="tablist">
 
-                    {% if central.viewLink is defined %}
-                        <li role="presentation" style="float:right;">
-                            <a href="{{ central.viewLink.url }}" target="_blank">
-                                {% if central.viewLink.icon %}
-                                    <i class="{{ 'fa fa-' ~ central.viewLink.icon }}"></i>
+                        {% for key, tab in central.tabs %}
+                            <li role="presentation" {% if loop.first %}class="active"{% endif %}>
+                                <a href="{{ '#' ~ key }}" aria-controls="home" role="tab" data-toggle="tab">
+                                    {% if tab.icon %}<i class="{{ 'fa fa-' ~ tab.icon }}"></i> {% endif %}{{ tab.name }}
+                                </a>
+                            </li>
+                        {% endfor %}
+
+                        {% if central.viewLink is defined %}
+                            <li role="presentation" style="float:right;">
+                                <a href="{{ central.viewLink.url }}" target="_blank">
+                                    {% if central.viewLink.icon %}
+                                        <i class="{{ 'fa fa-' ~ central.viewLink.icon }}"></i>
+                                    {% endif %}
+                                    {{ central.viewLink.name }}
+                                </a>
+                            </li>
+                        {% endif %}
+
+                    </ul>
+
+                    <div class="tab-content p-20">
+
+                        {% for key, tab in central.tabs %}
+
+                            <div role="tabpanel"
+                                 class="tab-pane animated fadeIn {% if loop.first %}in active{% endif %}"
+                                 id="{{ key }}">
+
+                                {% if tab.formZones is defined %}
+
+                                    {% for formZone in tab.formZones %}
+                                        {{ macros.formZone(form, formZone) }}
+                                    {% endfor %}
+
                                 {% endif %}
-                                {{ central.viewLink.name }}
-                            </a>
-                        </li>
-                    {% endif %}
 
-                </ul>
+                                {% if tab.iframeContent is defined %}
 
-                <div class="tab-content">
+                                    <iframe src="{{ tab.iframeContent.url }}" width="100%" height="1000px"
+                                            frameborder="0"></iframe>
 
-                    {% for key, tab in central.tabs %}
+                                {% endif %}
 
-                        <div role="tabpanel" class="panel-body tab-pane {% if loop.first %}active{% endif %}"
-                             id="{{ key }}">
+                            </div>
 
-                            {% if tab.formZones is defined %}
+                        {% endfor %}
 
-                                {% for formZone in tab.formZones %}
-                                    {{ macros.formZone(form, formZone) }}
-                                {% endfor %}
-
-                            {% endif %}
-
-                            {% if tab.iframeContent is defined %}
-
-                                <iframe src="{{ tab.iframeContent.url }}" width="100%" height="1000px"
-                                        frameborder="0"></iframe>
-
-                            {% endif %}
-
-                        </div>
-
-                    {% endfor %}
+                    </div>
 
                 </div>
 
-
             </div>
-
 
         </div>
 
