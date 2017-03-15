@@ -24,11 +24,11 @@
 
         {{ form_start(confirmationFormPanelProperties.form) }}
 
-        <div class="ibox panel-default">
+        <div class="card">
 
             {{ macros.panelHeader(confirmationFormPanelProperties) }}
 
-            <div class="ibox-content" style="overflow-x:scroll;">
+            <div class="card-body card-padding" style="overflow-x:scroll;">
 
                 {% do confirmationFormPanelProperties.form.submit.setRendered %}
 

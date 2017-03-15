@@ -32,12 +32,15 @@
     {% endif %}
     <div class="wh-form-field-multiple">
         <table class="table table-striped">
+
             <thead>
             <tr>
                 <td>
-                    <a href="#" id="{{ 'add-' ~ form.vars.name }}" class="btn btn-xs btn-primary">
-                        <i class="fa fa-plus"></i>
-                    </a>
+                    {% if form.vars.attr['disableAdd'] is not defined %}
+                        <a href="#" id="{{ 'add-' ~ form.vars.name }}" class="btn btn-xs btn-primary">
+                            <i class="fa fa-plus"></i>
+                        </a>
+                    {% endif %}
                 </td>
                 {% if form.vars.attr['data-form-template-head'] is defined %}
                     {% include form.vars.attr['data-form-template-head'] %}
@@ -48,6 +51,7 @@
                 {% endif %}
             </tr>
             </thead>
+
             <tbody {{ block('widget_container_attributes') }}>
             {% for child in form.children %}
                 <tr data-id="{{ child.vars.data.id }}">
@@ -55,6 +59,7 @@
                 </tr>
             {% endfor %}
             </tbody>
+
         </table>
     </div>
 {%- endblock collection_widget -%}

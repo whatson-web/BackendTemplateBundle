@@ -171,7 +171,14 @@
 {% macro formZone(form, formZone) %}{% spaceless %}
 
     {% if formZone.title is defined %}
-        <legend>{{ formZone.title }}</legend>
+        <legend>
+            {% if formZone.listButtons is defined %}
+                <div class="pull-right">
+                    {{ _self.listButtons(formZone.listButtons) }}
+                </div>
+            {% endif %}
+            {{ formZone.title }}
+        </legend>
     {% endif %}
 
     {% if formZone.fields is defined %}
