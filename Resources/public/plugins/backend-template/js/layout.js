@@ -118,8 +118,7 @@ var whFormFieldMultipleDelete = function () {
 };
 
 var initCollectionSortable = function () {
-    $('.modal-body tbody').each(function () {
-
+    $('tbody').each(function () {
         if ($(this).data('sortable-url')) {
             var list = $(this);
 
@@ -138,7 +137,6 @@ var initCollectionSortable = function () {
 
             $(this).disableSelection();
         }
-
     });
 };
 
