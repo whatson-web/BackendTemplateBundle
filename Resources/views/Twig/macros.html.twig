@@ -255,7 +255,7 @@
 
 {% endspaceless %}{% endmacro %}
 
-{% macro getValueOfEntity(entity, wantedValueSlug) %}{% spaceless %}
+{% macro getValueOfEntity(entity, wantedValueSlug, type, options) %}{% spaceless %}
 
     {% set fields = wantedValueSlug | split('.') %}
     {% set value = '' %}
@@ -272,8 +272,10 @@
 
     {% endfor %}
 
-    {% if value.timestamp is defined %}
-        {{ value.timestamp }}
+    {% if type == 'date' %}
+        {{ value.timestamp | date(options.dateFormat) }}
+    {% elseif type == 'price' %}
+        {{ value | localizedcurrency(options.currency) }}
     {% else %}
         {{ value }}
     {% endif %}
@@ -368,7 +370,9 @@
                                 </a>
                             </td>
                         {% elseif value.type is defined and value.type == 'date' %}
-                            <td>{{ _self.getValueOfEntity(entity, property) | date(value.dateFormat) }}</td>
+                            <td>{{ _self.getValueOfEntity(entity, property, 'date', {'dateFormat': value.dateFormat}) }}</td>
+                        {% elseif value.type is defined and value.type == 'price' %}
+                            <td>{{ _self.getValueOfEntity(entity, property, 'price', {'currency': value.currency}) }}</td>
                         {% else %}
 
                             {% if value.type is defined and value.type == 'boolean' %}

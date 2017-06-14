@@ -111,20 +111,18 @@ var whFormFieldMultipleDelete = function () {
 };
 
 var initCollectionSortable = function () {
-    $('.modal-body tbody').each(function () {
+    $('tbody').each(function () {
 
-        if ($(this).data('sortable-url')) {
+        if ($(this).data('sortable')) {
             var list = $(this);
 
             list.sortable({
                 placeholder: 'highlight',
                 axis: 'y',
                 stop: function () {
-                    $.ajax({
-                        type: 'POST',
-                        url: $(this).data('sortable-url'),
-                        data: list.sortable('serialize', {attribute: 'data-id', key: 'ids[]', expression: /(.+)/}),
-                        cache: false
+                    var nbChildren = $(this).children('tr').length;
+                    $(this).children('tr').each(function (key, value) {
+                        $(this).find('.sortable-field').val(nbChildren - key);
                     });
                 }
             });
