@@ -97,6 +97,10 @@
 
     {% for formField, properties  in formFields %}
 
+        {% if properties['field'] is defined %}
+            {% set formField = properties['field'] %}
+        {% endif %}
+
         {% if properties.col is not defined %}
             {% set properties = properties | merge({'col' : 12}) %}
         {% endif %}

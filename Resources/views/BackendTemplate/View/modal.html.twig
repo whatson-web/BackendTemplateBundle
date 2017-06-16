@@ -9,9 +9,7 @@
     {{ form_start(form, {'action' : formAction}) }}
 
     <div class="modal-body">
-        {% for formField, properties  in formFields %}
-            {{ form_row(attribute(form, formField)) }}
-        {% endfor %}
+        {{ macros.formFields(form, formFields) }}
     </div>
 
     <div class="modal-footer">
