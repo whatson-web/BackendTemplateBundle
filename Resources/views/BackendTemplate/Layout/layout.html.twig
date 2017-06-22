@@ -15,13 +15,23 @@
 
     <![endif]-->
 
-    {% stylesheets
-    '@WHBackendTemplateBundle/Resources/public/plugins/material/css/jquery.mCustomScrollbar.min.css'
-    '@WHBackendTemplateBundle/Resources/public/plugins/material/css/animate.min.css'
-    '@WHBackendTemplateBundle/Resources/public/plugins/material/css/app_1.min.css'
-    '@WHBackendTemplateBundle/Resources/public/plugins/material/css/app_2.min.css'
-    '@WHBackendTemplateBundle/Resources/public/plugins/backend-template/layout.css'
-    filter="cssrewrite" %}
+    {% stylesheets '@WHBackendTemplateBundle/Resources/public/plugins/material/css/jquery.mCustomScrollbar.min.css' filter="cssrewrite" %}
+    <link rel="stylesheet" href="{{ asset_url }}"/>
+    {% endstylesheets %}
+
+    {% stylesheets '@WHBackendTemplateBundle/Resources/public/plugins/material/css/animate.min.css' filter="cssrewrite" %}
+    <link rel="stylesheet" href="{{ asset_url }}"/>
+    {% endstylesheets %}
+
+    {% stylesheets '@WHBackendTemplateBundle/Resources/public/plugins/material/css/app_1.min.css' filter="cssrewrite" %}
+    <link rel="stylesheet" href="{{ asset_url }}"/>
+    {% endstylesheets %}
+
+    {% stylesheets '@WHBackendTemplateBundle/Resources/public/plugins/material/css/app_2.min.css' filter="cssrewrite" %}
+    <link rel="stylesheet" href="{{ asset_url }}"/>
+    {% endstylesheets %}
+
+    {% stylesheets '@WHBackendTemplateBundle/Resources/public/plugins/backend-template/layout.css' filter="cssrewrite" %}
     <link rel="stylesheet" href="{{ asset_url }}"/>
     {% endstylesheets %}
 
@@ -118,21 +128,35 @@
     </div>
 </div>
 
-{% javascripts
-'@WHBackendTemplateBundle/Resources/public/plugins/jquery/js/jquery.min.js'
-'@WHBackendTemplateBundle/Resources/public/plugins/jquery-ui/js/jquery-ui.min.js' %}
+{% javascripts '@WHBackendTemplateBundle/Resources/public/plugins/jquery/js/jquery.min.js' %}
 <script src="{{ asset_url }}"></script>
 {% endjavascripts %}
 
-<script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.full.min.js"></script>
+{% javascripts '@WHBackendTemplateBundle/Resources/public/plugins/jquery-ui/js/jquery-ui.min.js' %}
+<script src="{{ asset_url }}"></script>
+{% endjavascripts %}
 
-{% javascripts
-'@WHBackendTemplateBundle/Resources/public/plugins/bootstrap/js/bootstrap.min.js'
-'@WHBackendTemplateBundle/Resources/public/plugins/material/js/jquery.mCustomScrollbar.concat.min.js'
-'@WHBackendTemplateBundle/Resources/public/plugins/material/js/app.min.js'
-'@WHBackendTemplateBundle/Resources/public/plugins/material/js/waves.min.js'
-'@WHBackendTemplateBundle/Resources/public/plugins/backend-template/js/layout.js' %}
+{% javascripts '@WHBackendTemplateBundle/Resources/public/plugins/select2/select2.full.min.js' %}
+<script src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+{% javascripts '@WHBackendTemplateBundle/Resources/public/plugins/bootstrap/js/bootstrap.min.js' %}
+<script src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+{% javascripts '@WHBackendTemplateBundle/Resources/public/plugins/material/js/jquery.mCustomScrollbar.concat.min.js' %}
+<script src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+{% javascripts '@WHBackendTemplateBundle/Resources/public/plugins/material/js/app.min.js' %}
+<script src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+{% javascripts '@WHBackendTemplateBundle/Resources/public/plugins/material/js/waves.min.js' %}
+<script src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+{% javascripts '@WHBackendTemplateBundle/Resources/public/plugins/backend-template/js/layout.js' %}
 <script src="{{ asset_url }}"></script>
 {% endjavascripts %}
 
