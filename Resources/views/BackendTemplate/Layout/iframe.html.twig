@@ -15,18 +15,30 @@
 
     <![endif]-->
 
-    {% stylesheets
-    '@WHBackendTemplateBundle/Resources/public/plugins/bootstrap/css/bootstrap.min.css'
-    '@WHBackendTemplateBundle/Resources/public/plugins/inspinia/css/style.css'
-    '@WHBackendTemplateBundle/Resources/public/plugins/inspinia/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css'
-    '@WHBackendTemplateBundle/Resources/public/plugins/inspinia/css/plugins/iCheck/custom.css'
-    '@WHBackendTemplateBundle/Resources/public/plugins/backend-template/inspinia-overwrite.css'
-    filter="cssrewrite" %}
+    {% stylesheets '@WHBackendTemplateBundle/Resources/public/plugins/material/css/jquery.mCustomScrollbar.min.css' filter="cssrewrite" %}
+    <link rel="stylesheet" href="{{ asset_url }}"/>
+    {% endstylesheets %}
+
+    {% stylesheets '@WHBackendTemplateBundle/Resources/public/plugins/material/css/animate.min.css' filter="cssrewrite" %}
+    <link rel="stylesheet" href="{{ asset_url }}"/>
+    {% endstylesheets %}
+
+    {% stylesheets '@WHBackendTemplateBundle/Resources/public/plugins/material/css/app_1.min.css' filter="cssrewrite" %}
+    <link rel="stylesheet" href="{{ asset_url }}"/>
+    {% endstylesheets %}
+
+    {% stylesheets '@WHBackendTemplateBundle/Resources/public/plugins/material/css/app_2.min.css' filter="cssrewrite" %}
+    <link rel="stylesheet" href="{{ asset_url }}"/>
+    {% endstylesheets %}
+
+    {% stylesheets '@WHBackendTemplateBundle/Resources/public/plugins/backend-template/layout.css' filter="cssrewrite" %}
     <link rel="stylesheet" href="{{ asset_url }}"/>
     {% endstylesheets %}
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css"/>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
 
     {% stylesheets
     filter="scssphp" %}
@@ -38,29 +50,47 @@
 
 </head>
 
-<body class="fixed-nav pace-done skin-3">
+<body>
 
 {% import '@WHBackendTemplate/Twig/macros.html.twig' as macros %}
 
 {% block body %}{% endblock %}
 
-{% javascripts
-'@WHBackendTemplateBundle/Resources/public/plugins/jquery/js/jquery.min.js' %}
+<div class="modal fade" id="modalAjax" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content"></div>
+    </div>
+</div>
+
+{% javascripts '@WHBackendTemplateBundle/Resources/public/plugins/jquery/js/jquery.min.js' %}
 <script src="{{ asset_url }}"></script>
 {% endjavascripts %}
 
-<script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.full.min.js"></script>
+{% javascripts '@WHBackendTemplateBundle/Resources/public/plugins/jquery-ui/js/jquery-ui.min.js' %}
+<script src="{{ asset_url }}"></script>
+{% endjavascripts %}
 
-{% javascripts
-'@WHBackendTemplateBundle/Resources/public/plugins/jquery-ui/js/jquery-ui.min.js'
-'@WHBackendTemplateBundle/Resources/public/plugins/inspinia/js/inspinia.js'
-'@WHBackendTemplateBundle/Resources/public/plugins/inspinia/js/plugins/iCheck/icheck.min.js'
-'@WHBackendTemplateBundle/Resources/public/plugins/inspinia/js/plugins/metisMenu/jquery.metisMenu.js'
-'@WHBackendTemplateBundle/Resources/public/plugins/inspinia/js/plugins/pace/pace.min.js'
-'@WHBackendTemplateBundle/Resources/public/plugins/inspinia/js/plugins/slimscroll/jquery.slimscroll.min.js'
-'@WHBackendTemplateBundle/Resources/public/plugins/bootstrap/js/bootstrap.min.js'
-'@WHBackendTemplateBundle/Resources/public/plugins/backend-template/js/layout.js' %}
+{% javascripts '@WHBackendTemplateBundle/Resources/public/plugins/select2/select2.full.min.js' %}
+<script src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+{% javascripts '@WHBackendTemplateBundle/Resources/public/plugins/bootstrap/js/bootstrap.min.js' %}
+<script src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+{% javascripts '@WHBackendTemplateBundle/Resources/public/plugins/material/js/jquery.mCustomScrollbar.concat.min.js' %}
+<script src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+{% javascripts '@WHBackendTemplateBundle/Resources/public/plugins/material/js/app.min.js' %}
+<script src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+{% javascripts '@WHBackendTemplateBundle/Resources/public/plugins/material/js/waves.min.js' %}
+<script src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+{% javascripts '@WHBackendTemplateBundle/Resources/public/plugins/backend-template/js/layout.js' %}
 <script src="{{ asset_url }}"></script>
 {% endjavascripts %}
 

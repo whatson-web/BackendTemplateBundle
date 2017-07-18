@@ -377,14 +377,10 @@
                             <td>{{ _self.getValueOfEntity(entity, property, 'date', {'dateFormat': value.dateFormat}) }}</td>
                         {% elseif value.type is defined and value.type == 'price' %}
                             <td>{{ _self.getValueOfEntity(entity, property, 'price', {'currency': value.currency}) }}</td>
+                        {% elseif value.type is defined and value.type == 'boolean' %}
+                            <td>{% if _self.getValueOfEntity(entity, property) %}Oui{% else %}Non{% endif %}</td>
                         {% else %}
-
-                            {% if value.type is defined and value.type == 'boolean' %}
-                                <td>{% if _self.getValueOfEntity(entity, property) %}Oui{% else %}Non{% endif %}</td>
-                            {% else %}
-                                <td>{{ _self.getValueOfEntity(entity, property) | nl2br | raw }}</td>
-                            {% endif %}
-
+                            <td>{{ _self.getValueOfEntity(entity, property) | nl2br | raw }}</td>
                         {% endif %}
 
                     {% endif %}
