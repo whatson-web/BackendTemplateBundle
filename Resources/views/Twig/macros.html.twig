@@ -122,6 +122,11 @@
 
             {% if properties.type is defined and properties.type == 'wh_file' %}
 
+                {% set attribute = attribute(form, formField) %}
+                {% if attribute.vars.label != 'false' and attribute.vars.label != '' %}
+                    {{ form_label(attribute) }}
+                {% endif %}
+
                 {% set attribute = attribute(attribute(form, formField), 'url') %}
                 {% set data = attribute(form.vars.data, formField) %}
                 {% if data is not empty %}
