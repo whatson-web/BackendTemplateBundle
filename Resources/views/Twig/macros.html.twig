@@ -207,6 +207,11 @@
         {{ _self.panelHeader(properties) }}
 
         <div class="card-body {% if properties.tableFields is not defined %}card-padding{% endif %}">
+
+            {% if properties.legend is defined %}
+                {{ properties.legend | raw }}
+            {% endif %}
+
             {% if properties.formFields is defined %}
                 {{ _self.formFields(properties.form, properties.formFields) }}
             {% endif %}
