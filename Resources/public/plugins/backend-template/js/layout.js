@@ -112,16 +112,17 @@ var whFormFieldMultipleDelete = function () {
 
 var initCollectionSortable = function () {
     $('tbody').each(function () {
+        var tbody = $(this);
 
-        if ($(this).data('sortable')) {
+        if (tbody.data('sortable')) {
             var list = $(this);
 
             list.sortable({
                 placeholder: 'highlight',
                 axis: 'y',
                 stop: function () {
-                    var nbChildren = $(this).children('tr').length;
-                    $(this).children('tr').each(function (key, value) {
+                    var nbChildren = tbody.children('tr').length;
+                    tbody.children('tr').each(function (key, value) {
                         $(this).find('.sortable-field').val(nbChildren - key);
                     });
                 }
