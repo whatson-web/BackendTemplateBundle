@@ -50,6 +50,8 @@ var handleJsonResponse = function (data) {
         if (data.reload) {
             window.location.reload();
         }
+    } else {
+        $('#modalAjax .modal-content').html(data);
     }
 };
 
