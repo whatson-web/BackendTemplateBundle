@@ -149,6 +149,35 @@
                 {{ form_row(attribute) }}
                 {{ form_row(attribute(attribute(form, formField), 'alt')) }}
 
+            {% elseif properties.type is defined and properties.type == 'wh_file_translatable' %}
+
+                {% set attribute = attribute(form, formField) %}
+                {% if attribute.vars.label != 'false' and attribute.vars.label != '' %}
+                    {{ form_label(attribute) }}
+                {% endif %}
+
+                {% set attribute = attribute(attribute(form, formField), 'translatableUrl') %}
+                {% set data = attribute(form.vars.data, formField) %}
+                {% if data is not empty %}
+                    <div class="form-group">
+                        <div class="control-label">
+                            {% if data.isImage %}
+                                <a href="{{ wh_media_baseurl ~ attribute(data, 'translatableUrl') }}" target="_blank">
+                                    <img src="{{ wh_media_baseurl ~ attribute(data, 'translatableUrl') }}"
+                                         class="img-responsive">
+                                </a>
+                            {% else %}
+                                <a href="{{ wh_media_baseurl ~ attribute(data, 'translatableUrl') }}" class="btn btn-primary btn-xs"
+                                   target="_blank">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+                {{ form_row(attribute) }}
+                {{ form_row(attribute(attribute(form, formField), 'alt')) }}
+
             {% else %}
 
                 {% set formFieldFields = formField | split('.') %}
