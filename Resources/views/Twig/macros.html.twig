@@ -122,6 +122,7 @@
 
             {% if properties.type is defined and properties.type == 'wh_file' %}
 
+
                 {% set attribute = attribute(form, formField) %}
                 {% if attribute.vars.label != 'false' and attribute.vars.label != '' %}
                     {{ form_label(attribute) }}
@@ -138,8 +139,10 @@
                                          class="img-responsive">
                                 </a>
                             {% else %}
-                                <a href="{{ wh_media_baseurl ~ attribute(data, 'url') }}" class="btn btn-primary btn-xs"
-                                   target="_blank">
+                                <a href="{{ wh_media_baseurl ~ attribute(data, 'url') }}"
+                                   class="btn btn-primary btn-xs"
+                                   target="_blank"
+                                >
                                     <i class="fa fa-eye"></i>
                                 </a>
                             {% endif %}
@@ -148,6 +151,15 @@
                 {% endif %}
                 {{ form_row(attribute) }}
                 {{ form_row(attribute(attribute(form, formField), 'alt')) }}
+
+            {% elseif properties.type is defined and properties.type == 'link' %}
+
+                <a
+                        href="{{ properties.href }}"
+                        class="btn {% if properties.color is defined %}{{ 'btn-'~properties.color }}{% endif %} {% if properties.size is defined %}{{ 'btn-'~properties.size }}{% endif %}"
+                >
+                    {{ properties.name }}
+                </a>
 
             {% else %}
 
