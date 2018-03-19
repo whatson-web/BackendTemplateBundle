@@ -1,35 +1,45 @@
 {% extends 'bootstrap_3_layout.html.twig' %}
 
-{% block elfinder_widget %}
-    {% set attr = attr|merge({class: (attr.class|default('') ~ ' form-control')|trim}) %}
-    <input type="text" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}
-           data-type="elfinder-input-field"/>
-    {% if enable and instance is defined %}
-        <script type="text/javascript" charset="utf-8">
-            if (window.jQuery) {
-                $('[data-type="elfinder-input-field"][id="{{ id }}"]').on("click", function () {
-                    var childWin = window.open("{{ path('elfinder', {'instance': instance, 'homeFolder': homeFolder }) }}?id={{ id }}", "popupWindow", "height=450, width=900");
-                });
-            } else {
+{% block wh_finder_widget %}
 
-                document.addEventListener("DOMContentLoaded", function (event) {
-                    $('[data-type="elfinder-input-field"][id="{{ id }}"]').on("click", function () {
-                        var childWin = window.open("{{ path('elfinder', {'instance': instance, 'homeFolder': homeFolder }) }}?id={{ id }}", "popupWindow", "height=450, width=900");
-                    });
-                });
-            }
+    <a href="#" class="btn btn-primary wh_finder_btn" data-id="{{ id }}">
+        <i class="fa fa-edit"></i>
+    </a>
 
-            function setValue(value, element_id) {
-                $('[data-type="elfinder-input-field"]' + (element_id ? '[id="' + element_id + '"]' : '')).val(value).change();
-            }
-        </script>
-    {% endif %}
+    {{ form_widget(form) }}
+
+    <script type="text/javascript" charset="utf-8">
+      document.addEventListener('DOMContentLoaded', function() {
+        $('.wh_finder_btn[data-id="{{ id }}"]').on('click', function() {
+          $('[id="{{ id }}"]').click();
+
+          return false;
+        });
+
+        $('[id="{{ id }}"]').on('click', function() {
+          window.open(
+              "{{ asset('bundles/whmedia/plugins/wh-finder/index.html') }}#/?id={{ id }}&type=id",
+              'wh media center',
+              'location=no, menubar=no, status=no, scrollbars=no, menubar=no, width=800, height=600',
+          );
+        });
+      });
+
+      function setMedia(value, element_id) {
+        console.log(value);
+        console.log(element_id);
+
+        $('[id="' + element_id + '"]').val(value).change();
+      }
+    </script>
+
 {% endblock %}
 
 {%- block collection_widget -%}
     {% if prototype is defined %}
         {%- set attr = attr|merge({'data-prototype': include(form.vars.attr['data-form-template'], {'form': form.vars.prototype}) }) -%}
     {% endif %}
+
     <div class="wh-form-field-multiple">
         <table class="table table-striped">
 
@@ -86,8 +96,8 @@
     {% if label is not same as(false) and label is empty %}
         {%- if label_format is not empty -%}
             {% set label = label_format|replace({
-            '%name%': name,
-            '%id%': id,
+                '%name%': name,
+                '%id%': id,
             }) %}
         {%- else -%}
             {% set label = name|humanize %}
@@ -169,8 +179,8 @@
         {% if label is empty -%}
             {%- if label_format is not empty -%}
                 {% set label = label_format|replace({
-                '%name%': name,
-                '%id%': id,
+                    '%name%': name,
+                    '%id%': id,
                 }) %}
             {%- else -%}
                 {% set label = name|humanize %}
