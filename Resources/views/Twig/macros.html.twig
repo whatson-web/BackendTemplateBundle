@@ -219,12 +219,13 @@
 {% endspaceless %}{% endmacro %}
 
 {% macro formZone(form, formZone) %}{% spaceless %}
+    {% import _self as macros %}
 
     {% if formZone.title is defined %}
         <legend>
             {% if formZone.listButtons is defined %}
                 <div class="pull-right">
-                    {{ _self.listButtons(formZone.listButtons) }}
+                    {{ macros.listButtons(formZone.listButtons) }}
                 </div>
             {% endif %}
             {{ formZone.title }}
@@ -232,12 +233,13 @@
     {% endif %}
 
     {% if formZone.fields is defined %}
-        {{ _self.formFields(form, formZone.fields) }}
+        {{ macros.formFields(form, formZone.fields) }}
     {% endif %}
 
 {% endspaceless %}{% endmacro %}
 
 {% macro panel(properties) %}{% spaceless %}
+    {% import _self as macros %}
 
     {% if properties.color is not defined %}
         {% set properties = properties | merge({'color' : 'default'}) %}
@@ -245,7 +247,7 @@
 
     <div class="card {{ 'panel-' ~ properties.color }}">
 
-        {{ _self.panelHeader(properties) }}
+        {{ macros.panelHeader(properties) }}
 
         <div class="card-body {% if properties.tableFields is not defined %}card-padding{% endif %}">
 
@@ -254,27 +256,27 @@
             {% endif %}
 
             {% if properties.formFields is defined %}
-                {{ _self.formFields(properties.form, properties.formFields) }}
+                {{ macros.formFields(properties.form, properties.formFields) }}
             {% endif %}
             {% if properties.tableFields is defined %}
                 {% if properties.sortable is defined %}
                     <div class="wh-sortable">
-                        {{ _self.table(properties.tableFields, properties.entities, {'sortable': true}) }}
+                        {{ macros.table(properties.tableFields, properties.entities, {'sortable': true}) }}
                     </div>
                 {% else %}
-                    {{ _self.table(properties.tableFields, properties.entities, {}) }}
+                    {{ macros.table(properties.tableFields, properties.entities, {}) }}
                 {% endif %}
             {% endif %}
 
             {% if properties.footerListButtons is defined %}
                 <div>
-                    {{ _self.listButtons(properties.footerListButtons) }}
+                    {{ macros.listButtons(properties.footerListButtons) }}
                 </div>
             {% endif %}
 
             {% if properties.footerListFormButtons is defined %}
                 <div>
-                    {{ _self.listFormButtons(properties.footerListFormButtons, properties.form) }}
+                    {{ macros.listFormButtons(properties.footerListFormButtons, properties.form) }}
                 </div>
             {% endif %}
 
@@ -285,6 +287,7 @@
 {% endspaceless %}{% endmacro %}
 
 {% macro panelHeader(properties) %}{% spaceless %}
+    {% import _self as macros %}
 
     <div class="card-header">
 
@@ -299,7 +302,7 @@
                 {% if properties.headerListButtons is defined %}
                     <td class="right">
                         <div class="actions">
-                            {{ _self.listButtons(properties.headerListButtons) }}
+                            {{ macros.listButtons(properties.headerListButtons) }}
                         </div>
                     </td>
                 {% endif %}
@@ -338,6 +341,7 @@
 {% endspaceless %}{% endmacro %}
 
 {% macro table(fields, entities, properties) %}{% spaceless %}
+    {% import _self as macros %}
 
     <table class="wh-table table table-striped">
 
@@ -410,28 +414,28 @@
 
                         {% endfor %}
 
-                        <td>{{ _self.listButtons(entityButtons) }}</td>
+                        <td>{{ macros.listButtons(entityButtons) }}</td>
 
                     {% else %}
 
                         {% if value.type is defined and value.type == 'link' %}
-                            {% set entityValue = _self.getValueOfEntity(entity, property) %}
+                            {% set entityValue = macros.getValueOfEntity(entity, property) %}
                             {% if not (entityValue matches '#http://.*#') %}
                                 {% set entityValue = path('ft_wh_seo_router_dispatch', {'url' : entityValue}) %}
                             {% endif %}
                             <td>
                                 <a href="{{ entityValue }}" target="_blank">
-                                    {{ _self.getValueOfEntity(entity, property) }}
+                                    {{ macros.getValueOfEntity(entity, property) }}
                                 </a>
                             </td>
                         {% elseif value.type is defined and value.type == 'date' %}
-                            <td>{{ _self.getValueOfEntity(entity, property, 'date', {'dateFormat': value.dateFormat}) }}</td>
+                            <td>{{ macros.getValueOfEntity(entity, property, 'date', {'dateFormat': value.dateFormat}) }}</td>
                         {% elseif value.type is defined and value.type == 'price' %}
-                            <td>{{ _self.getValueOfEntity(entity, property, 'price', {'currency': value.currency}) }}</td>
+                            <td>{{ macros.getValueOfEntity(entity, property, 'price', {'currency': value.currency}) }}</td>
                         {% elseif value.type is defined and value.type == 'boolean' %}
-                            <td>{% if _self.getValueOfEntity(entity, property) %}Oui{% else %}Non{% endif %}</td>
+                            <td>{% if macros.getValueOfEntity(entity, property) %}Oui{% else %}Non{% endif %}</td>
                         {% else %}
-                            <td>{{ _self.getValueOfEntity(entity, property) | nl2br | raw }}</td>
+                            <td>{{ macros.getValueOfEntity(entity, property) | nl2br | raw }}</td>
                         {% endif %}
 
                     {% endif %}

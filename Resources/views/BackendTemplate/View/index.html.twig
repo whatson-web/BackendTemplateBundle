@@ -12,6 +12,8 @@
 
 {% block body %}
 
+    {% import '@WHBackendTemplate/Twig/macros.html.twig' as macros %}
+
     {% if formPanelProperties.form is defined %}
 
         {% form_theme formPanelProperties.form '@WHBackendTemplate/Twig/bootstrap_3_layout.html.twig' %}

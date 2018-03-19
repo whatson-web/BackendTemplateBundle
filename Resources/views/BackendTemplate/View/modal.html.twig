@@ -4,6 +4,8 @@
 
 {% block body %}
 
+    {% import '@WHBackendTemplate/Twig/macros.html.twig' as macros %}
+
     {% form_theme form '@WHBackendTemplate/Twig/bootstrap_3_layout.html.twig' %}
 
     {{ form_start(form, {'action' : formAction}) }}
