@@ -150,6 +150,10 @@
                     </div>
                 {% endif %}
                 {{ form_row(attribute) }}
+                {{ form_row(attribute(attribute(form, formField), 'url')) }}
+
+                {{ form_row(attribute(attribute(form, formField), 'alt')) }}
+
 
             {% elseif properties.type is defined and properties.type == 'link' %}
 
@@ -219,7 +223,8 @@
 
         {{ macros.panelHeader(properties) }}
 
-        <div class="card-body {% if properties.tableFields is not defined %}card-padding{% endif %}">
+        <div class="
+        card-body {% if properties.tableFields is not defined %}card-padding{% endif %}">
 
             {% if properties.legend is defined %}
                 {{ properties.legend | raw }}

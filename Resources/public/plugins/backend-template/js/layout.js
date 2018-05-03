@@ -88,6 +88,36 @@ var setCountChars = function(element) {
       html(nbChars + ' characters');
 };
 
+
+var whMediaFinderField =  function() {
+    $('.wh_finder_btn').each(function() {
+    var whFinderBtn = $(this);
+
+    whFinderBtn.on('click', function() {
+      $('[id="' + whFinderBtn.data('id') + '"]').click();
+      return false;
+    });
+
+    var whFinderUrl = Routing.generate('bk_wh_media_file_finder');
+
+    $('[id="' + whFinderBtn.data('id') + '"]').on('click', function() {
+      window.open(
+          whFinderUrl + "#/?id="+whFinderBtn.data('id')+"&type=id",
+          'wh media center',
+          'location=no, menubar=no, status=no, scrollbars=no, menubar=no, width=800, height=600'
+      );
+    });
+  });
+
+};
+
+function setMedia(value, element_id) {
+  console.log(value);
+  console.log(element_id);
+
+  $('[id="' + element_id + '"]').val(value).change();
+}
+
 var whFormFieldMultiple = function() {
   $('.wh-form-field-multiple').each(function() {
     var tbody = $(this).find('tbody');
@@ -103,6 +133,8 @@ var whFormFieldMultiple = function() {
       whListButtonsWriteTdWidth();
       initSelect2();
       initTinyMCE();
+      whMediaFinderField();
+
 
       return false;
     });
@@ -169,4 +201,9 @@ $(window).ready(function() {
   initCountChars();
   initSelect2();
   initCollectionSortable();
+});
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  whMediaFinderField();
 });
