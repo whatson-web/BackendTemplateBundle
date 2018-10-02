@@ -190,6 +190,8 @@ var functionToReloadOnAjaxRequest = function() {
   initCountChars();
   initSelect2();
   initCollectionSortable();
+  whMediaFinderField();
+  setMedia();
 };
 
 $(window).ready(function() {
