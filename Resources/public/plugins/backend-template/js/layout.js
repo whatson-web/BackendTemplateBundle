@@ -108,14 +108,30 @@ var whMediaFinderField =  function() {
       );
     });
   });
-
 };
 
 function setMedia(value, element_id) {
-  console.log(value);
-  console.log(element_id);
-
   $('[id="' + element_id + '"]').val(value).change();
+  onImgChange(value,  element_id)
+}
+
+function onImgChange (value,  element_id) {
+
+  console.log('change image')
+
+  var url = apiUrl + "/api/files/" + value;
+  var controlLabel = $('.control-label.' + element_id );
+  var input = $('#' + element_id );
+
+  $.ajax({
+    method: "GET",
+    url: url,
+  }).done(function(data) {
+    controlLabel.find('a').attr('href', mediaBaseUrl + data['urlLast']);
+    controlLabel.find('.img-responsive').attr('src', mediaBaseUrl + data['urlLast']);
+    input.next().find('input[type="text"]').val(data['url']) ;
+  });
+
 }
 
 var whFormFieldMultiple = function() {

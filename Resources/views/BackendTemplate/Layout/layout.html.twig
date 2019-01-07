@@ -157,6 +157,12 @@
 <script src="{{ asset_url }}"></script>
 {% endjavascripts %}
 
+
+<script type="text/javascript">
+  var mediaBaseUrl = '{{ wh_media_baseurl }}';
+  var apiUrl = '{{ api_url }}';
+</script>
+
 {% javascripts '@WHBackendTemplateBundle/Resources/public/plugins/backend-template/js/layout.js' %}
 <script src="{{ asset_url }}"></script>
 {% endjavascripts %}

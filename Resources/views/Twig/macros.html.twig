@@ -131,8 +131,10 @@
                 {% set attribute = attribute(attribute(form, formField), 'id') %}
                 {% set data = attribute(form.vars.data, formField) %}
                 {% if data is not empty %}
+
+
                     <div class="form-group">
-                        <div class="control-label">
+                        <div class="{{ 'control-label ' ~  attribute.vars.id }}">
                             {% if data.isImage %}
                                 <a href="{{ wh_media_baseurl ~ attribute(data, 'url') }}" target="_blank">
                                     <img src="{{ wh_media_baseurl ~ attribute(data, 'url') }}"
