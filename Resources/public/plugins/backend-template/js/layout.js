@@ -116,10 +116,7 @@ function setMedia(value, element_id) {
 }
 
 function onImgChange (value,  element_id) {
-
-  console.log('change image')
-
-  var url = apiUrl + "/api/files/" + value;
+  var url = apiFileUrl + '/' + value;
   var controlLabel = $('.control-label.' + element_id );
   var input = $('#' + element_id );
 
