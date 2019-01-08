@@ -124,6 +124,12 @@ function onImgChange (value,  element_id) {
     method: "GET",
     url: url,
   }).done(function(data) {
+    var preview = controlLabel.find('img');
+    if (!preview.length) {
+      $('.preview').remove();
+      $('[id="' + element_id + '"]').before('<div class="preview"><img src="' + mediaBaseUrl + data['urlLast'] +'" class="img-responsive"></div>');
+    }
+
     controlLabel.find('a').attr('href', mediaBaseUrl + data['urlLast']);
     controlLabel.find('.img-responsive').attr('src', mediaBaseUrl + data['urlLast']);
     input.next().find('input[type="text"]').val(data['url']) ;
