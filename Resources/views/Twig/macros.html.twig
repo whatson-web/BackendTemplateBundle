@@ -312,7 +312,9 @@
 
             {% set trClass = '' %}
 
-            {% if attribute(entity, 'status') is defined %}
+            {% if attribute(entity, 'trClass') is defined %}
+                {% set trClass = attribute(entity, 'trClass') %}
+            {% elseif attribute(entity, 'status') is defined %}
                 {% if attribute(entity, 'status') == 0 %}
                     {% set trClass = 'danger' %}
                 {% else %}
