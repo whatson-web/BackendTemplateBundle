@@ -1,38 +1,21 @@
 {% extends 'bootstrap_3_layout.html.twig' %}
 
-{% block elfinder_widget %}
-    {% set attr = attr|merge({class: (attr.class|default('') ~ ' form-control')|trim}) %}
-    <input type="text" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}
-           data-type="elfinder-input-field"/>
-    {% if enable and instance is defined %}
-        <script type="text/javascript" charset="utf-8">
-            if (window.jQuery) {
-                $('[data-type="elfinder-input-field"][id="{{ id }}"]').on("click", function () {
-                    var childWin = window.open("{{ path('elfinder', {'instance': instance, 'homeFolder': homeFolder }) }}?id={{ id }}", "popupWindow", "height=450, width=900");
-                });
-            } else {
+{% block wh_finder_widget %}
 
-                document.addEventListener("DOMContentLoaded", function (event) {
-                    $('[data-type="elfinder-input-field"][id="{{ id }}"]').on("click", function () {
-                        var childWin = window.open("{{ path('elfinder', {'instance': instance, 'homeFolder': homeFolder }) }}?id={{ id }}", "popupWindow", "height=450, width=900");
-                    });
-                });
-            }
+    <a href="#" class="btn btn-primary wh_finder_btn" data-id="{{ id }}">
+        <i class="fa fa-edit"></i>
+    </a>
 
-            function setValue(value, element_id) {
-                $('[data-type="elfinder-input-field"]' + (element_id ? '[id="' + element_id + '"]' : '')).val(value).change();
-            }
-        </script>
-    {% endif %}
+    {{ form_widget(form) }}
 {% endblock %}
 
 {%- block collection_widget -%}
     {% if prototype is defined %}
         {%- set attr = attr|merge({'data-prototype': include(form.vars.attr['data-form-template'], {'form': form.vars.prototype}) }) -%}
     {% endif %}
+
     <div class="wh-form-field-multiple">
         <table class="table table-striped">
-
             <thead>
             <tr>
                 <td>
@@ -55,6 +38,7 @@
             <tbody {{ block('widget_container_attributes') }}>
             {% for child in form.children %}
                 <tr data-id="{{ child.vars.data.id }}">
+
                     {{ include(form.vars.attr['data-form-template'], {'form': child}) }}
                 </tr>
             {% endfor %}
@@ -177,5 +161,7 @@
             {%- endif -%}
         {%- endif -%}
         <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ translation_domain is same as(false) ? label : label|trans({}, translation_domain) }}</label>
+
+
     {%- endif -%}
 {%- endblock form_label -%}

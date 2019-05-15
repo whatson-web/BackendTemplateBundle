@@ -40,6 +40,9 @@
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
 
+    <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+
     {% stylesheets
     filter="scssphp" %}
     <link rel="stylesheet" href="{{ asset_url }}"/>
@@ -51,8 +54,6 @@
 </head>
 
 <body>
-
-{% import '@WHBackendTemplate/Twig/macros.html.twig' as macros %}
 
 <header id="header" class="clearfix" data-ma-theme="blue">
 
@@ -155,6 +156,12 @@
 {% javascripts '@WHBackendTemplateBundle/Resources/public/plugins/material/js/waves.min.js' %}
 <script src="{{ asset_url }}"></script>
 {% endjavascripts %}
+
+
+<script type="text/javascript">
+  var mediaBaseUrl = '{{ wh_media_baseurl }}';
+  var apiFileUrl = '{{ api_file_url }}';
+</script>
 
 {% javascripts '@WHBackendTemplateBundle/Resources/public/plugins/backend-template/js/layout.js' %}
 <script src="{{ asset_url }}"></script>
